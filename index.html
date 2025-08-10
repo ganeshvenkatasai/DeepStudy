@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
 
     <!--=============== REMIXICONS ===============-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
-
-    <!--=============== CSS ===============-->
-    <link rel="stylesheet" href="assets/css/styles.css">
 
     <!-- Markdown CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
@@ -19,6 +17,24 @@
 
     <title>Deep Study</title>
     <style>
+        :root {
+            --body-color: #ffffff;
+            --title-color: #2d2d2d;
+            --text-color: #333333;
+            --container-color: #f8f8f8;
+            --border-color: #eaeaea;
+            --sidebar-width: 280px;
+            --header-height: 60px;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--body-color);
+            color: var(--text-color);
+        }
+
         .markdown-body {
             box-sizing: border-box;
             min-width: 200px;
@@ -56,27 +72,128 @@
             border-radius: 4px;
         }
 
-        /* Mobile sidebar behavior */
-        @media screen and (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                left: -100%;
-                top: 0;
-                height: 100vh;
-                transition: left 0.3s ease;
-                z-index: 100;
-            }
+        /* Header styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background-color: var(--body-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+        }
 
+        .header__container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header__logo {
+            display: flex;
+            align-items: center;
+            color: var(--title-color);
+            font-weight: 600;
+            column-gap: .5rem;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .header__logo i {
+            font-size: 1.5rem;
+        }
+
+        .header__toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--title-color);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            position: fixed;
+            top: var(--header-height);
+            left: -100%;
+            height: calc(100vh - var(--header-height));
+            width: var(--sidebar-width);
+            background-color: var(--body-color);
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            z-index: 99;
+            transition: left 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar__container {
+            padding: 1rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .sidebar__list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .sidebar__link {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar__link:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .sidebar__link.active-link {
+            background-color: rgba(0,0,0,0.1);
+            font-weight: 500;
+        }
+
+        /* Main content */
+        .main {
+            padding: calc(var(--header-height) + 1rem) 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: calc(100vh - var(--header-height));
+        }
+
+        /* Mobile view styles */
+        @media screen and (max-width: 768px) {
             .sidebar.show {
                 left: 0;
             }
+        }
 
-            .main {
-                transition: margin-left 0.3s ease;
+        /* Desktop view styles */
+        @media screen and (min-width: 769px) {
+            .sidebar {
+                left: 0;
+                top: var(--header-height);
+                height: calc(100vh - var(--header-height));
             }
 
-            .main.shifted {
-                margin-left: 0;
+            .main {
+                margin-left: var(--sidebar-width);
+                padding: calc(var(--header-height) + 1rem) 2rem 2rem;
+            }
+
+            .header__toggle {
+                display: none;
             }
         }
     </style>
@@ -99,64 +216,46 @@
     <!--=============== SIDEBAR ===============-->
     <nav class="sidebar" id="sidebar">
         <div class="sidebar__container">
-            <div class="sidebar__content">
-                <div>
-                    <div class="sidebar__list">
-                        <a href="#" class="sidebar__link active-link" data-tab="notes">
-                            <span>Full Notes</span>
-                        </a>
-                        
-                        <a href="#" class="sidebar__link" data-tab="short">
-                            <span>Short Notes</span>
-                        </a>
-
-                        <a href="#" class="sidebar__link" data-tab="micro">
-                            <span>Micro Notes</span>
-                        </a>
-
-                        <a href="#" class="sidebar__link" data-tab="interview">
-                            <span>Interview Q&A</span>
-                        </a>
-                    </div>
-                </div>
+            <div class="sidebar__list" id="sidebar-list">
+                <!-- Dynamic content will be inserted here -->
             </div>
         </div>
     </nav>
 
     <!--=============== MAIN ===============-->
     <main class="main container" id="main">
-        <!-- Content containers for each tab -->
-        <div id="notes-content" class="content-container active">
-            <div class="loading">Loading Full Notes...</div>
-        </div>
-        
-        <div id="short-content" class="content-container">
-            <div class="loading">Loading Short Notes...</div>
-        </div>
-        
-        <div id="micro-content" class="content-container">
-            <div class="loading">Loading Micro Notes...</div>
-        </div>
-        
-        <div id="interview-content" class="content-container">
-            <div class="loading">Loading Interview Q&A...</div>
-        </div>
+        <!-- Dynamic content containers will be inserted here -->
     </main>
-    
-    <!--=============== MAIN JS ===============-->
-    <script src="assets/js/main.js"></script>
 
     <!-- Marked.js for markdown rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script>
-        // Tab configuration
-        const tabs = [
-            { id: 'notes', label: 'Full Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes.md' },
-            { id: 'short', label: 'Short Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/short.md' },
-            { id: 'micro', label: 'Micro Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/micro.md' },
-            { id: 'interview', label: 'Interview Q&A', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/interview.md' }
-        ];
+        // Tab configuration - ONLY EDIT THIS ARRAY TO ADD NEW PAGES
+       const tabs = [
+         { id: 'java', label: 'Java', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/java.md' },
+         { id: 'javainteview', label: 'Java Interview Q&A', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/java-interview.md' },
+         { id: 'springboot', label: 'Spring Boot', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/springboot.md' },
+         { id: 'springbootinterview', label: 'Spring Boot Interview Q&A', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/springboot-interview.md' },
+         { id: 'dsaa2z', label: 'DSA A2Z Sheet', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/dsaa2z.md' },
+         { id: 'lldnotes', label: 'LLD Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/lld-notes.md' },
+         { id: 'lldshortnotes', label: 'LLD Short Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/lld-short-notes.md' },
+         { id: 'lldmicronotes', label: 'LLD Micro Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/lld-micro-notes.md' },
+         { id: 'hldnotes', label: 'HLD Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/hld-notes.md' },
+         { id: 'hldshortnotes', label: 'HLD Short Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/hld-short-notes.md' },
+         { id: 'hldmicronotes', label: 'HLD Micro Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/hld-micro-notes.md' },
+         { id: 'oops', label: 'OOPS', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/oops.md' },
+         { id: 'dbms', label: 'DBMS', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/dbms.md' },
+         { id: 'operatingsystems', label: 'Operating Systems', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/operatingsystems.md' },
+         { id: 'computernetworks', label: 'Computer Networks', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/computernetworks.md' },
+         { id: 'mysql', label: 'MySQL', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/mysql.md' },
+         { id: 'mongodb', label: 'Mongo DB', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/mongodb.md' },
+         { id: 'kafka', label: 'Kafka', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/kafka.md' },
+         { id: 'redis', label: 'Redis', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/redis.md' },
+         { id: 'docker', label: 'Docker', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/docker.md' },
+         { id: 'kubernetes', label: 'Kubernetes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/kubernetes.md' },
+         { id: 'aws', label: 'AWS', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/aws.md' }
+      ];
 
         // Initialize marked with options
         marked.setOptions({
@@ -168,23 +267,48 @@
             }
         });
 
+        // Function to generate sidebar navigation
+        function generateSidebar() {
+            const sidebarList = document.getElementById('sidebar-list');
+            sidebarList.innerHTML = '';
+            
+            tabs.forEach((tab, index) => {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.className = `sidebar__link ${index === 0 ? 'active-link' : ''}`;
+                link.dataset.tab = tab.id;
+                link.innerHTML = `<span>${tab.label}</span>`;
+                sidebarList.appendChild(link);
+            });
+        }
+
+        // Function to generate content containers
+        function generateContentContainers() {
+            const main = document.getElementById('main');
+            main.innerHTML = '';
+            
+            tabs.forEach((tab, index) => {
+                const container = document.createElement('div');
+                container.id = `${tab.id}-content`;
+                container.className = `content-container ${index === 0 ? 'active' : ''}`;
+                container.innerHTML = `<div class="loading">Loading ${tab.label}...</div>`;
+                main.appendChild(container);
+            });
+        }
+
         // Function to toggle sidebar in mobile view
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            const main = document.getElementById('main');
             if (window.innerWidth <= 768) {
                 sidebar.classList.toggle('show');
-                main.classList.toggle('shifted');
             }
         }
 
         // Function to close sidebar in mobile view
         function closeSidebar() {
             const sidebar = document.getElementById('sidebar');
-            const main = document.getElementById('main');
             if (window.innerWidth <= 768) {
                 sidebar.classList.remove('show');
-                main.classList.remove('shifted');
             }
         }
 
@@ -197,30 +321,21 @@
             if (!contentContainer) return;
 
             try {
-                // Show loading state
-                contentContainer.innerHTML = '<div class="loading">Loading content...</div>';
+                contentContainer.innerHTML = `<div class="loading">Loading ${tab.label}...</div>`;
 
-                // Fetch the markdown content
                 const response = await fetch(tab.url);
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
-                }
+                if (!response.ok) throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
 
                 const markdown = await response.text();
-                
-                // Convert markdown to HTML
                 const html = marked.parse(markdown);
                 
-                // Create a container with the markdown body class
                 const markdownContainer = document.createElement('div');
                 markdownContainer.className = 'markdown-body';
                 markdownContainer.innerHTML = html;
                 
-                // Update the content container
                 contentContainer.innerHTML = '';
                 contentContainer.appendChild(markdownContainer);
                 
-                // Highlight any code blocks
                 document.querySelectorAll('pre code').forEach((block) => {
                     hljs.highlightElement(block);
                 });
@@ -247,37 +362,35 @@
                 container.classList.toggle('active', container.id === `${tabId}-content`);
             });
 
-            // Close sidebar in mobile view
+            // Scroll to the top of the page
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
             closeSidebar();
-
-            // Load content if not already loaded
-            const contentContainer = document.getElementById(`${tabId}-content`);
-            if (contentContainer && contentContainer.innerHTML.includes('Loading')) {
-                loadMarkdownContent(tabId);
-            }
+            loadMarkdownContent(tabId);
         }
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
+            // Generate dynamic content
+            generateSidebar();
+            generateContentContainers();
+
             // Load initial content
-            loadMarkdownContent('notes');
+            loadMarkdownContent(tabs[0].id);
 
             // Set up tab click handlers
-            document.querySelectorAll('.sidebar__link').forEach(link => {
-                link.addEventListener('click', (e) => {
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.sidebar__link')) {
                     e.preventDefault();
-                    const tabId = link.dataset.tab;
+                    const tabId = e.target.closest('.sidebar__link').dataset.tab;
                     switchTab(tabId);
-                });
+                }
             });
 
             // Set up sidebar toggle
-            const headerToggle = document.getElementById('header-toggle');
-            if (headerToggle) {
-                headerToggle.addEventListener('click', toggleSidebar);
-            }
+            document.getElementById('header-toggle').addEventListener('click', toggleSidebar);
 
-            // Close sidebar when clicking outside of it on mobile
+            // Close sidebar when clicking outside
             document.addEventListener('click', (e) => {
                 const sidebar = document.getElementById('sidebar');
                 const headerToggle = document.getElementById('header-toggle');
@@ -289,16 +402,13 @@
                     closeSidebar();
                 }
             });
-        });
 
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                const sidebar = document.getElementById('sidebar');
-                const main = document.getElementById('main');
-                sidebar.classList.remove('show');
-                main.classList.remove('shifted');
-            }
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    closeSidebar();
+                }
+            });
         });
     </script>
 </body>
