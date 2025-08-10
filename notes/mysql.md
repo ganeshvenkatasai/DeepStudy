@@ -1,161 +1,109 @@
-# Redis Basics
-```
-In-Memory Database: Stores data in RAM for ultra-fast read/write operations.
-Key-Value Store: Simple data structure where keys map to values (strings, lists, etc.).
-NoSQL Database: Schema-less, flexible data storage, unlike traditional SQL databases.
-Persistence Options: Supports snapshotting (RDB) and append-only file (AOF) for durability.
-Single-Threaded: Handles commands one at a time, ensuring atomicity.
-```
+# MySQL
 
-# Data Structures
-```
-Strings: Basic key-value pairs (e.g., SET name "Alice").
-Lists: Ordered collections of strings (e.g., LPUSH and RPOP operations).
-Sets: Unordered unique elements (e.g., SADD to add, SINTER for intersection).
-Sorted Sets: Sets with scores for ordering (e.g., ZADD to rank items).
-Hashes: Key-value pairs within a key (e.g., HSET user:1 name "Bob").
-Bitmaps & HyperLogLogs: Special types for efficient bit operations and unique counting.
-```
+## Database Operations
+- `CREATE DATABASE dbname;` - Create new database
+- `USE dbname;` - Select database to work with
+- `DROP DATABASE dbname;` - Delete database
+- `SHOW DATABASES;` - List all databases
 
-# Advanced Features
-```
-Pub/Sub Messaging: Real-time message broadcasting between clients.
-Transactions (MULTI/EXEC): Group commands to execute atomically.
-Lua Scripting: Run server-side scripts for complex operations.
-TTL (Time-To-Live): Auto-expire keys after a set duration (EXPIRE key 60).
-Replication: Master-slave setup for read scalability and backup.
-Cluster Mode: Sharding for horizontal scaling across multiple nodes.
-Geospatial Indexing: Store and query locations (e.g., GEOADD).
-```
+## Table Operations
+### Create/Modify Tables
+- `CREATE TABLE tablename (col1 datatype, col2 datatype);` - Basic table creation
+- `CREATE TABLE tablename (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50));` - With primary key
+- `ALTER TABLE tablename ADD COLUMN newcol datatype;` - Add column
+- `ALTER TABLE tablename DROP COLUMN colname;` - Remove column
+- `ALTER TABLE tablename MODIFY COLUMN colname newdatatype;` - Change column type
+- `DROP TABLE tablename;` - Delete table
+- `TRUNCATE TABLE tablename;` - Delete all data but keep table
+- `RENAME TABLE oldname TO newname;` - Change table name
 
-# Use Cases
-```
-Caching: Speed up apps by storing frequently accessed data.
-Session Storage: Manage user sessions in web apps.
-Leaderboards: Sorted sets for rankings (e.g., gaming scores).
-Rate Limiting: Control API request rates.
-Real-Time Analytics: Track metrics with fast writes.
-```
+## Data Querying
+### Basic SELECT
+- `SELECT * FROM tablename;` - Get all data
+- `SELECT col1, col2 FROM tablename;` - Specific columns
+- `SELECT DISTINCT col1 FROM tablename;` - Unique values
+- `SELECT COUNT(*) FROM tablename;` - Count rows
 
-# Commands Cheatsheet
+### Filtering
+- `SELECT * FROM tablename WHERE condition;` - Basic filter
+- `SELECT * FROM tablename WHERE col1 = 'value';` - Exact match
+- `SELECT * FROM tablename WHERE col1 LIKE 'A%';` - Starts with A
+- `SELECT * FROM tablename WHERE col1 IN (1,2,3);` - Multiple values
+- `SELECT * FROM tablename WHERE col1 BETWEEN 10 AND 20;` - Range
+- `SELECT * FROM tablename WHERE col1 IS NULL;` - Null values
 
-## Basic Key-Value Operations
+### Sorting/Limiting
+- `SELECT * FROM tablename ORDER BY col1;` - Sort ascending
+- `SELECT * FROM tablename ORDER BY col1 DESC;` - Sort descending
+- `SELECT * FROM tablename LIMIT 10;` - First 10 rows
+- `SELECT * FROM tablename LIMIT 5,10;` - Rows 6-15
 
-```
-SET name "Alice"          # Stores key "name" with value "Alice"  
-GET name                 # Returns "Alice"  
-DEL name                 # Deletes the key "name"  
-EXISTS name              # Returns 1 if key exists, else 0  
-EXPIRE name 60           # Deletes "name" after 60 seconds  
-TTL name                 # Checks remaining time-to-live (in seconds)  
-```
+## Data Modification
+### Insert
+- `INSERT INTO tablename VALUES (val1, val2);` - Insert all columns
+- `INSERT INTO tablename (col1,col2) VALUES (val1,val2);` - Specific columns
+- `INSERT INTO tablename SELECT * FROM othertable;` - Copy data
 
-## Data Structures
+### Update
+- `UPDATE tablename SET col1 = value WHERE condition;` - Basic update
+- `UPDATE tablename SET col1 = col1 + 1 WHERE id = 5;` - Increment value
 
-### Strings
+### Delete
+- `DELETE FROM tablename WHERE condition;` - Delete specific rows
+- `DELETE FROM tablename;` - Delete all rows (be careful!)
 
-```
-SET counter 10            # Stores integer 10  
-INCR counter             # Increments to 11 (atomic)  
-DECR counter             # Decrements to 10  
-APPEND name " Smith"     # Appends to value ("Alice Smith")  
-```
+## Joins
+- `SELECT * FROM table1 INNER JOIN table2 ON table1.id = table2.id;` - Inner join
+- `SELECT * FROM table1 LEFT JOIN table2 ON table1.id = table2.id;` - Left join
+- `SELECT * FROM table1 RIGHT JOIN table2 ON table1.id = table2.id;` - Right join
+- `SELECT * FROM table1 CROSS JOIN table2;` - Cross join (cartesian product)
 
-### Lists (Ordered)
-
-```
-LPUSH users "Alice"       # Adds to start of list  
-RPUSH users "Bob"        # Adds to end  
-LPOP users               # Removes/returns first element  
-LRANGE users 0 -1        # Returns all elements  
-```
-
-
-### Sets (Unique)
-
-```
-SADD admins "Alice"      # Adds "Alice" to set
-SREM admins "Bob"        # Removes "Bob"
-SMEMBERS admins          # Lists all members
-SISMEMBER admins "Alice" # Returns 1 if member exists
-```
-
-### Sorted Sets (Ranked)
-
-```
-ZADD leaderboard 100 "Alice"  # Adds with score 100
-ZRANGE leaderboard 0 -1       # Returns all (ascending)
-ZREVRANGE leaderboard 0 2     # Top 3 (descending)
-```
-
-### Hashes (Key-Value Pairs in a Key)
-
-```
-HSET user:1 name "Alice" age 30  # Stores nested fields
-HGET user:1 name            # Returns "Alice"
-HGETALL user:1              # Returns all fields
-```
+## Aggregation
+- `SELECT COUNT(*) FROM tablename;` - Count rows
+- `SELECT SUM(col1) FROM tablename;` - Sum values
+- `SELECT AVG(col1) FROM tablename;` - Average
+- `SELECT MIN(col1), MAX(col1) FROM tablename;` - Min/max
+- `SELECT col1, COUNT(*) FROM tablename GROUP BY col1;` - Group with count
+- `SELECT col1, SUM(col2) FROM tablename GROUP BY col1 HAVING SUM(col2) > 100;` - Group with filter
 
 ## Advanced Features
+### Indexes
+- `CREATE INDEX idx_name ON tablename(colname);` - Create index
+- `SHOW INDEX FROM tablename;` - View indexes
+- `DROP INDEX idx_name ON tablename;` - Remove index
 
-### Pub/Sub Messaging
+### Views
+- `CREATE VIEW viewname AS SELECT col1,col2 FROM tablename;` - Create view
+- `SELECT * FROM viewname;` - Use view
+- `DROP VIEW viewname;` - Delete view
 
+### Stored Procedures
+```sql
+DELIMITER //
+CREATE PROCEDURE proc_name(IN param INT)
+BEGIN
+  SELECT * FROM tablename WHERE id = param;
+END //
+DELIMITER ;
 ```
-SUBSCRIBE news            # Listens to "news" channel
-PUBLISH news "Hello!"     # Sends message to subscribers (in another terminal)
-```
 
+- CALL proc_name(5); - Execute procedure
+- DROP PROCEDURE proc_name; - Remove procedure
 
 ### Transactions
+- START TRANSACTION; - Begin transaction
+- COMMIT; - Save changes
+- ROLLBACK; - Undo changes
 
-```
-MULTI                     # Starts transaction
-SET balance 100
-INCRBY balance 50
-EXEC                      # Executes all commands atomically
-```
-
-### Lua Scripting
-
-```
-EVAL "return redis.call('GET', 'name')" 0  # Runs script to fetch "name"
-```
+### Utility Commands
+- SHOW TABLES; - List tables in database
+- DESCRIBE tablename; - Show table structure
+- EXPLAIN SELECT...; - Show query execution plan
+- SHOW PROCESSLIST; - View active connections
 
 
-### Persistence & Administration
-
-```
-SAVE                      # Forces snapshot (blocks Redis)
-BGSAVE                    # Saves snapshot in background
-CONFIG GET *              # Lists all server configs
-FLUSHALL                  # Deletes ALL data (use with caution!)
-```
 
 
-## Real-World Use Cases
-
-### Caching
-
-```
-SETEX page:home 3600 "<html>..."  # Caches HTML for 1 hour
-```
-
-
-### Rate Limiting
-
-```
-INCR ip:127.0.0.1        # Tracks requests
-EXPIRE ip:127.0.0.1 60   # Resets counter after 60s
-# (Check if counter > 100 to block)
-```
-
-
-### Session Storage
-
-```
-SET session:abc123 "{user_id: 1}"
-EXPIRE session:abc123 86400  # Expires in 24h
-```
 
 
 

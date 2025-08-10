@@ -1,185 +1,104 @@
-# Redis Basics
-```
-In-Memory Database: Stores data in RAM for ultra-fast read/write operations.
-Key-Value Store: Simple data structure where keys map to values (strings, lists, etc.).
-NoSQL Database: Schema-less, flexible data storage, unlike traditional SQL databases.
-Persistence Options: Supports snapshotting (RDB) and append-only file (AOF) for durability.
-Single-Threaded: Handles commands one at a time, ensuring atomicity.
-```
-
-# Data Structures
-```
-Strings: Basic key-value pairs (e.g., SET name "Alice").
-Lists: Ordered collections of strings (e.g., LPUSH and RPOP operations).
-Sets: Unordered unique elements (e.g., SADD to add, SINTER for intersection).
-Sorted Sets: Sets with scores for ordering (e.g., ZADD to rank items).
-Hashes: Key-value pairs within a key (e.g., HSET user:1 name "Bob").
-Bitmaps & HyperLogLogs: Special types for efficient bit operations and unique counting.
-```
-
-# Advanced Features
-```
-Pub/Sub Messaging: Real-time message broadcasting between clients.
-Transactions (MULTI/EXEC): Group commands to execute atomically.
-Lua Scripting: Run server-side scripts for complex operations.
-TTL (Time-To-Live): Auto-expire keys after a set duration (EXPIRE key 60).
-Replication: Master-slave setup for read scalability and backup.
-Cluster Mode: Sharding for horizontal scaling across multiple nodes.
-Geospatial Indexing: Store and query locations (e.g., GEOADD).
-```
-
-# Use Cases
-```
-Caching: Speed up apps by storing frequently accessed data.
-Session Storage: Manage user sessions in web apps.
-Leaderboards: Sorted sets for rankings (e.g., gaming scores).
-Rate Limiting: Control API request rates.
-Real-Time Analytics: Track metrics with fast writes.
-```
-
-# Commands Cheatsheet
-
-## Basic Key-Value Operations
-
-```
-SET name "Alice"          # Stores key "name" with value "Alice"  
-GET name                 # Returns "Alice"  
-DEL name                 # Deletes the key "name"  
-EXISTS name              # Returns 1 if key exists, else 0  
-EXPIRE name 60           # Deletes "name" after 60 seconds  
-TTL name                 # Checks remaining time-to-live (in seconds)  
-```
-
-## Data Structures
-
-### Strings
-
-```
-SET counter 10            # Stores integer 10  
-INCR counter             # Increments to 11 (atomic)  
-DECR counter             # Decrements to 10  
-APPEND name " Smith"     # Appends to value ("Alice Smith")  
-```
-
-### Lists (Ordered)
-
-```
-LPUSH users "Alice"       # Adds to start of list  
-RPUSH users "Bob"        # Adds to end  
-LPOP users               # Removes/returns first element  
-LRANGE users 0 -1        # Returns all elements  
-```
-
-
-### Sets (Unique)
-
-```
-SADD admins "Alice"      # Adds "Alice" to set
-SREM admins "Bob"        # Removes "Bob"
-SMEMBERS admins          # Lists all members
-SISMEMBER admins "Alice" # Returns 1 if member exists
-```
-
-### Sorted Sets (Ranked)
-
-```
-ZADD leaderboard 100 "Alice"  # Adds with score 100
-ZRANGE leaderboard 0 -1       # Returns all (ascending)
-ZREVRANGE leaderboard 0 2     # Top 3 (descending)
-```
-
-### Hashes (Key-Value Pairs in a Key)
-
-```
-HSET user:1 name "Alice" age 30  # Stores nested fields
-HGET user:1 name            # Returns "Alice"
-HGETALL user:1              # Returns all fields
-```
-
-## Advanced Features
-
-### Pub/Sub Messaging
-
-```
-SUBSCRIBE news            # Listens to "news" channel
-PUBLISH news "Hello!"     # Sends message to subscribers (in another terminal)
-```
-
-
-### Transactions
-
-```
-MULTI                     # Starts transaction
-SET balance 100
-INCRBY balance 50
-EXEC                      # Executes all commands atomically
-```
-
-### Lua Scripting
-
-```
-EVAL "return redis.call('GET', 'name')" 0  # Runs script to fetch "name"
-```
-
-
-### Persistence & Administration
-
-```
-SAVE                      # Forces snapshot (blocks Redis)
-BGSAVE                    # Saves snapshot in background
-CONFIG GET *              # Lists all server configs
-FLUSHALL                  # Deletes ALL data (use with caution!)
-```
-
-
-## Real-World Use Cases
-
-### Caching
-
-```
-SETEX page:home 3600 "<html>..."  # Caches HTML for 1 hour
-```
-
-
-### Rate Limiting
-
-```
-INCR ip:127.0.0.1        # Tracks requests
-EXPIRE ip:127.0.0.1 60   # Resets counter after 60s
-# (Check if counter > 100 to block)
-```
-
-
-### Session Storage
-
-```
-SET session:abc123 "{user_id: 1}"
-EXPIRE session:abc123 86400  # Expires in 24h
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# MongoDB Fundamentals
+- **NoSQL Database**: Document-oriented, schema-less data store.
+- **BSON**: Binary JSON format used for storage (supports more data types than JSON).
+- **Collections**: Analogous to tables in RDBMS (contains documents).
+- **Documents**: JSON-like records (field-value pairs with flexible schema).
+- **_id Field**: Unique primary key (auto-generated ObjectId if not specified).
+
+# CRUD Operations
+- **insertOne()**: Add single document to collection.
+- **insertMany()**: Add multiple documents at once.
+- **find()**: Query documents (empty = all docs).
+- **findOne()**: Returns first matching document.
+- **updateOne()**: Update first matching document.
+- **updateMany()**: Update all matching documents.
+- **replaceOne()**: Fully replace first matching document.
+- **deleteOne()**: Remove first matching document.
+- **deleteMany()**: Remove all matching documents.
+- **bulkWrite()**: Perform multiple operations in bulk.
+
+# Query Operators
+- **Comparison**: $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin.
+- **Logical**: $and, $or, $not, $nor.
+- **Element**: $exists, $type.
+- **Array**: $all, $elemMatch, $size.
+- **Evaluation**: $expr, $jsonSchema, $mod, $regex, $text, $where.
+
+# Update Operators
+- **Fields**: $set, $unset, $rename, $inc, $mul, $min, $max.
+- **Arrays**: $push, $pop, $pull, $pullAll, $addToSet.
+- **Bitwise**: $bit.
+- **Array Positional**: $ (update matched array element).
+- **Aggregation Pipeline**: Use $[] for all array elements.
+
+# Indexes
+- **Single Field**: Index on one field.
+- **Compound**: Index on multiple fields.
+- **Multikey**: Index on array fields (one entry per array element).
+- **Text**: Full-text search index.
+- **Geospatial**: 2dsphere for geometric data.
+- **Hashed**: For sharding hash-based keys.
+- **TTL**: Automatically remove docs after period.
+- **Unique**: Enforce field uniqueness.
+- **Partial**: Index only docs matching filter.
+- **Sparse**: Index only docs with the field.
+
+# Aggregation Framework
+- **$match**: Filter documents (like find()).
+- **$group**: Group by expression.
+- **$project**: Reshape documents (include/exclude fields).
+- **$sort**: Order documents.
+- **$skip**: Skip N documents.
+- **$limit**: Limit result count.
+- **$unwind**: Deconstruct array fields.
+- **$lookup**: Left outer join with another collection.
+- **$facet**: Multiple pipelines in single stage.
+- **$bucket**: Categorize docs into groups.
+
+# Performance
+- **Explain Plans**: Analyze query performance (db.collection.explain()).
+- **Covered Query**: Query satisfied entirely by index.
+- **Read Preference**: Control where queries execute (primary/secondary).
+- **Write Concern**: Number of nodes that must acknowledge writes.
+- **Sharding**: Horizontal partitioning across servers.
+- **Replica Sets**: High availability through data replication.
+
+# Data Modeling
+- **Embedded**: Related data in single document (1:1, 1:few).
+- **Referenced**: Related data in separate collections (1:many, many:many).
+- **Atomicity**: Write operations atomic at document level.
+- **Schema Validation**: Enforce structure with JSON Schema.
+
+# Transactions
+- **Multi-Document ACID**: Supported in replica sets (v4.0+) and sharded clusters (v4.2+).
+- **Session**: Context for transaction sequence.
+- **Retryable Writes**: Automatically retry certain operations.
+
+# Security
+- **Authentication**: SCRAM, x.509, LDAP, Kerberos.
+- **Authorization**: Role-based access control (RBAC).
+- **Encryption**: TLS/SSL, client-side field-level encryption.
+- **Auditing**: Track system activity.
+
+# Tools
+- **mongod**: Primary daemon process.
+- **mongos**: Router for sharded clusters.
+- **mongo**: Interactive shell.
+- **Compass**: GUI for MongoDB.
+- **Atlas**: Cloud MongoDB service.
+- **BI Connector**: SQL interface for analytics.
+
+# Best Practices
+- **Index Selectivity**: Create indexes on high-cardinality fields.
+- **Projection**: Return only needed fields.
+- **Batch Operations**: Use bulk writes for efficiency.
+- **Connection Pooling**: Reuse database connections.
+- **Monitoring**: Track slow queries, hardware metrics.
+- **Backups**: Regular snapshots + oplog for point-in-time recovery.
+
+# Common Use Cases
+- **Content Management**: Flexible schema for varied content types.
+- **Product Catalogs**: Nested attributes, variants.
+- **Real-time Analytics**: Aggregation framework.
+- **IoT**: Time-series data, sensor readings.
+- **Mobile Apps**: Offline-first sync capability.
