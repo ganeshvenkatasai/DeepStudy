@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== REMIXICONS ===============-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <!-- Markdown CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+
+    <!-- Highlight.js for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+    <title>Deep Study</title>
+    <style>
+        .markdown-body {
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 45px;
+        }
+
+        @media (max-width: 767px) {
+            .markdown-body {
+                padding: 15px;
+            }
+        }
+
+        .content-container {
+            display: none;
+        }
+
+        .content-container.active {
+            display: block;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            padding: 20px;
+            border: 1px solid #ffcdd2;
+            background-color: #ffebee;
+            border-radius: 4px;
+        }
+
+        /* Mobile sidebar behavior */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                height: 100vh;
+                transition: left 0.3s ease;
+                z-index: 100;
+            }
+
+            .sidebar.show {
+                left: 0;
+            }
+
+            .main {
+                transition: margin-left 0.3s ease;
+            }
+
+            .main.shifted {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!--=============== HEADER ===============-->
+    <header class="header" id="header">
+        <div class="header__container">
+            <a href="#" class="header__logo">
+                <i class="ri-cloud-fill"></i>
+                <span>Deep Study</span>
+            </a>
+            
+            <button class="header__toggle" id="header-toggle">
+                <i class="ri-menu-line"></i>
+            </button>
+        </div>
+    </header>
+
+    <!--=============== SIDEBAR ===============-->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar__container">
+            <div class="sidebar__content">
+                <div>
+                    <div class="sidebar__list">
+                        <a href="#" class="sidebar__link active-link" data-tab="notes">
+                            <span>Full Notes</span>
+                        </a>
+                        
+                        <a href="#" class="sidebar__link" data-tab="short">
+                            <span>Short Notes</span>
+                        </a>
+
+                        <a href="#" class="sidebar__link" data-tab="micro">
+                            <span>Micro Notes</span>
+                        </a>
+
+                        <a href="#" class="sidebar__link" data-tab="interview">
+                            <span>Interview Q&A</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!--=============== MAIN ===============-->
+    <main class="main container" id="main">
+        <!-- Content containers for each tab -->
+        <div id="notes-content" class="content-container active">
+            <div class="loading">Loading Full Notes...</div>
+        </div>
+        
+        <div id="short-content" class="content-container">
+            <div class="loading">Loading Short Notes...</div>
+        </div>
+        
+        <div id="micro-content" class="content-container">
+            <div class="loading">Loading Micro Notes...</div>
+        </div>
+        
+        <div id="interview-content" class="content-container">
+            <div class="loading">Loading Interview Q&A...</div>
+        </div>
+    </main>
+    
+    <!--=============== MAIN JS ===============-->
+    <script src="assets/js/main.js"></script>
+
+    <!-- Marked.js for markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        // Tab configuration
+        const tabs = [
+            { id: 'notes', label: 'Full Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes.md' },
+            { id: 'short', label: 'Short Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/short.md' },
+            { id: 'micro', label: 'Micro Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/micro.md' },
+            { id: 'interview', label: 'Interview Q&A', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/interview.md' }
+        ];
+
+        // Initialize marked with options
+        marked.setOptions({
+            gfm: true,
+            breaks: true,
+            highlight: function(code, lang) {
+                const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+                return hljs.highlight(code, { language }).value;
+            }
+        });
+
+        // Function to toggle sidebar in mobile view
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.getElementById('main');
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle('show');
+                main.classList.toggle('shifted');
+            }
+        }
+
+        // Function to close sidebar in mobile view
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.getElementById('main');
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('show');
+                main.classList.remove('shifted');
+            }
+        }
+
+        // Function to fetch and render markdown
+        async function loadMarkdownContent(tabId) {
+            const tab = tabs.find(t => t.id === tabId);
+            if (!tab) return;
+
+            const contentContainer = document.getElementById(`${tabId}-content`);
+            if (!contentContainer) return;
+
+            try {
+                // Show loading state
+                contentContainer.innerHTML = '<div class="loading">Loading content...</div>';
+
+                // Fetch the markdown content
+                const response = await fetch(tab.url);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
+                }
+
+                const markdown = await response.text();
+                
+                // Convert markdown to HTML
+                const html = marked.parse(markdown);
+                
+                // Create a container with the markdown body class
+                const markdownContainer = document.createElement('div');
+                markdownContainer.className = 'markdown-body';
+                markdownContainer.innerHTML = html;
+                
+                // Update the content container
+                contentContainer.innerHTML = '';
+                contentContainer.appendChild(markdownContainer);
+                
+                // Highlight any code blocks
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            } catch (error) {
+                console.error(`Error loading ${tab.label}:`, error);
+                contentContainer.innerHTML = `
+                    <div class="error-message">
+                        <p>Failed to load ${tab.label}. Please try again later.</p>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Function to switch tabs
+        function switchTab(tabId) {
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar__link').forEach(link => {
+                link.classList.toggle('active-link', link.dataset.tab === tabId);
+            });
+
+            // Update content visibility
+            document.querySelectorAll('.content-container').forEach(container => {
+                container.classList.toggle('active', container.id === `${tabId}-content`);
+            });
+
+            // Close sidebar in mobile view
+            closeSidebar();
+
+            // Load content if not already loaded
+            const contentContainer = document.getElementById(`${tabId}-content`);
+            if (contentContainer && contentContainer.innerHTML.includes('Loading')) {
+                loadMarkdownContent(tabId);
+            }
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load initial content
+            loadMarkdownContent('notes');
+
+            // Set up tab click handlers
+            document.querySelectorAll('.sidebar__link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tabId = link.dataset.tab;
+                    switchTab(tabId);
+                });
+            });
+
+            // Set up sidebar toggle
+            const headerToggle = document.getElementById('header-toggle');
+            if (headerToggle) {
+                headerToggle.addEventListener('click', toggleSidebar);
+            }
+
+            // Close sidebar when clicking outside of it on mobile
+            document.addEventListener('click', (e) => {
+                const sidebar = document.getElementById('sidebar');
+                const headerToggle = document.getElementById('header-toggle');
+                
+                if (window.innerWidth <= 768 && 
+                    !sidebar.contains(e.target) && 
+                    e.target !== headerToggle && 
+                    !headerToggle.contains(e.target)) {
+                    closeSidebar();
+                }
+            });
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                const sidebar = document.getElementById('sidebar');
+                const main = document.getElementById('main');
+                sidebar.classList.remove('show');
+                main.classList.remove('shifted');
+            }
+        });
+    </script>
+</body>
+</html>
