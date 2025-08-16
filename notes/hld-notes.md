@@ -1,4 +1,4 @@
-# High Level Design Comprehensive Guide
+# HLD Notes
 
 ## Core Concepts
 
