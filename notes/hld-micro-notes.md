@@ -1,4 +1,4 @@
-# High Level Design
+# HLD Micro Notes
 
 ## Core Concepts
 - Scalability (Vertical/Horizontal)
