@@ -3,15 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light">
+    <!-- Force light color scheme -->
+    <meta name="color-scheme" content="light only">
+    
+    <style>
+        /* Force light mode colors */
+        :root, body, .markdown-body {
+            --body-color: #ffffff !important;
+            --title-color: #2d2d2d !important;
+            --text-color: #333333 !important;
+            --container-color: #f8f8f8 !important;
+            --border-color: #eaeaea !important;
+            background: #ffffff !important;
+            color: #333333 !important;
+            color-scheme: light only !important;
+        }
+        
+        /* Override any dark mode styles */
+        @media (prefers-color-scheme: dark) {
+            :root, body, .markdown-body {
+                --body-color: #ffffff !important;
+                --title-color: #2d2d2d !important;
+                --text-color: #333333 !important;
+                --container-color: #f8f8f8 !important;
+                --border-color: #eaeaea !important;
+                background: #ffffff !important;
+                color: #333333 !important;
+            }
+        }
+    </style>
 
     <!--=============== REMIXICONS ===============-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
 
-    <!-- Markdown CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+    <!-- Light version of GitHub Markdown CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.min.css">
 
-    <!-- Highlight.js for code syntax highlighting -->
+    <!-- Highlight.js light theme -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
 
@@ -172,6 +200,54 @@
             min-height: calc(100vh - var(--header-height));
         }
 
+        /* Landing page styles */
+        .landing-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .category-card {
+            background: var(--container-color);
+            border-radius: 6px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .category-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--title-color);
+        }
+
+        .concept-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .concept-item {
+            padding: 0.5rem 0;
+        }
+
+        .concept-link {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 0;
+        }
+
+        .concept-link:hover {
+            text-decoration: underline;
+        }
+
         /* Mobile view styles */
         @media screen and (max-width: 768px) {
             .sidebar.show {
@@ -202,7 +278,7 @@
     <!--=============== HEADER ===============-->
     <header class="header" id="header">
         <div class="header__container">
-            <a href="#" class="header__logo">
+            <a href="#" class="header__logo" id="home-link">
                 <i class="ri-cloud-fill"></i>
                 <span>Deep Study</span>
             </a>
@@ -224,6 +300,18 @@
 
     <!--=============== MAIN ===============-->
     <main class="main container" id="main">
+        <!-- Landing page content -->
+        <div class="content-container active" id="landing-content">
+            <div class="landing-container">
+                <h1>Welcome to Deep Study</h1>
+                <p>Your comprehensive resource for technical interview preparation and learning</p>
+                
+                <div class="category-grid" id="category-grid">
+                    <!-- Categories will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+        
         <!-- Dynamic content containers will be inserted here -->
     </main>
 
@@ -232,30 +320,30 @@
 
     <script>
         // Tab configuration - ONLY EDIT THIS ARRAY TO ADD NEW PAGES
-       const tabs = [
-         { id: 'java', label: 'Java', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/java.md' },
-         { id: 'javainteview', label: 'Java Interview Q&A', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/java-interview.md' },
-         { id: 'springboot', label: 'Spring Boot', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/springboot.md' },
-         { id: 'springbootinterview', label: 'Spring Boot Interview Q&A', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/springboot-interview.md' },
-         { id: 'dsaa2z', label: 'DSA A2Z Sheet', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/dsaa2z.md' },
-         { id: 'lldnotes', label: 'LLD Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/lld-notes.md' },
-         { id: 'lldshortnotes', label: 'LLD Short Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/lld-short-notes.md' },
-         { id: 'lldmicronotes', label: 'LLD Micro Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/lld-micro-notes.md' },
-         { id: 'hldnotes', label: 'HLD Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/hld-notes.md' },
-         { id: 'hldshortnotes', label: 'HLD Short Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/hld-short-notes.md' },
-         { id: 'hldmicronotes', label: 'HLD Micro Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/hld-micro-notes.md' },
-         { id: 'oops', label: 'OOPS', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/oops.md' },
-         { id: 'dbms', label: 'DBMS', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/dbms.md' },
-         { id: 'operatingsystems', label: 'Operating Systems', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/operatingsystems.md' },
-         { id: 'computernetworks', label: 'Computer Networks', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/computernetworks.md' },
-         { id: 'mysql', label: 'MySQL', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/mysql.md' },
-         { id: 'mongodb', label: 'Mongo DB', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/mongodb.md' },
-         { id: 'kafka', label: 'Kafka', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/kafka.md' },
-         { id: 'redis', label: 'Redis', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/redis.md' },
-         { id: 'docker', label: 'Docker', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/docker.md' },
-         { id: 'kubernetes', label: 'Kubernetes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/kubernetes.md' },
-         { id: 'aws', label: 'AWS', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/aws.md' }
-      ];
+        const tabs = [
+            { id: 'java', label: 'Java', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/java.md', category: 'Programming Languages' },
+            { id: 'javainteview', label: 'Java Interview Q&A', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/java-interview.md', category: 'Interview Preparation' },
+            { id: 'springboot', label: 'Spring Boot', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/springboot.md', category: 'Frameworks' },
+            { id: 'springbootinterview', label: 'Spring Boot Interview Q&A', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/springboot-interview.md', category: 'Interview Preparation' },
+            { id: 'dsaa2z', label: 'DSA A2Z Sheet', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/dsaa2z.md', category: 'Data Structures & Algorithms' },
+            { id: 'lldnotes', label: 'LLD Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/lld-notes.md', category: 'System Design' },
+            { id: 'lldshortnotes', label: 'LLD Short Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/lld-short-notes.md', category: 'System Design' },
+            { id: 'lldmicronotes', label: 'LLD Micro Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/lld-micro-notes.md', category: 'System Design' },
+            { id: 'hldnotes', label: 'HLD Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/hld-notes.md', category: 'System Design' },
+            { id: 'hldshortnotes', label: 'HLD Short Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/hld-short-notes.md', category: 'System Design' },
+            { id: 'hldmicronotes', label: 'HLD Micro Notes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/hld-micro-notes.md', category: 'System Design' },
+            { id: 'oops', label: 'OOPS', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/oops.md', category: 'Programming Concepts' },
+            { id: 'dbms', label: 'DBMS', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/dbms.md', category: 'Databases' },
+            { id: 'operatingsystems', label: 'Operating Systems', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/operatingsystems.md', category: 'Computer Science' },
+            { id: 'computernetworks', label: 'Computer Networks', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/computernetworks.md', category: 'Computer Science' },
+            { id: 'mysql', label: 'MySQL', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/mysql.md', category: 'Databases' },
+            { id: 'mongodb', label: 'Mongo DB', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/mongodb.md', category: 'Databases' },
+            { id: 'kafka', label: 'Kafka', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/kafka.md', category: 'Messaging Systems' },
+            { id: 'redis', label: 'Redis', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/redis.md', category: 'Databases' },
+            { id: 'docker', label: 'Docker', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/docker.md', category: 'DevOps' },
+            { id: 'kubernetes', label: 'Kubernetes', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/kubernetes.md', category: 'DevOps' },
+            { id: 'aws', label: 'AWS', url: 'https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/notes/aws.md', category: 'Cloud Computing' }
+        ];
 
         // Initialize marked with options
         marked.setOptions({
@@ -275,22 +363,70 @@
             tabs.forEach((tab, index) => {
                 const link = document.createElement('a');
                 link.href = '#';
-                link.className = `sidebar__link ${index === 0 ? 'active-link' : ''}`;
+                link.className = `sidebar__link`;
                 link.dataset.tab = tab.id;
                 link.innerHTML = `<span>${tab.label}</span>`;
                 sidebarList.appendChild(link);
             });
         }
 
+        // Function to generate category cards for landing page
+        function generateLandingPage() {
+            const categoryGrid = document.getElementById('category-grid');
+            categoryGrid.innerHTML = '';
+            
+            // Group tabs by category
+            const categories = {};
+            tabs.forEach(tab => {
+                if (!categories[tab.category]) {
+                    categories[tab.category] = [];
+                }
+                categories[tab.category].push(tab);
+            });
+            
+            // Create cards for each category
+            for (const [category, items] of Object.entries(categories)) {
+                const card = document.createElement('div');
+                card.className = 'category-card';
+                
+                const title = document.createElement('h2');
+                title.className = 'category-title';
+                title.textContent = category;
+                
+                const list = document.createElement('ul');
+                list.className = 'concept-list';
+                
+                items.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'concept-item';
+                    
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.className = 'concept-link';
+                    link.dataset.tab = item.id;
+                    link.textContent = item.label;
+                    
+                    listItem.appendChild(link);
+                    list.appendChild(listItem);
+                });
+                
+                card.appendChild(title);
+                card.appendChild(list);
+                categoryGrid.appendChild(card);
+            }
+        }
+
         // Function to generate content containers
         function generateContentContainers() {
             const main = document.getElementById('main');
-            main.innerHTML = '';
             
-            tabs.forEach((tab, index) => {
+            // Landing page container already exists
+            
+            // Add tab containers
+            tabs.forEach(tab => {
                 const container = document.createElement('div');
                 container.id = `${tab.id}-content`;
-                container.className = `content-container ${index === 0 ? 'active' : ''}`;
+                container.className = 'content-container';
                 container.innerHTML = `<div class="loading">Loading ${tab.label}...</div>`;
                 main.appendChild(container);
             });
@@ -350,8 +486,28 @@
             }
         }
 
+        // Function to show landing page
+        function showLandingPage() {
+            // Hide all content containers
+            document.querySelectorAll('.content-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            // Show landing page
+            document.getElementById('landing-content').classList.add('active');
+            
+            // Update URL without page reload
+            window.history.pushState({ page: 'landing' }, '', '/');
+        }
+
         // Function to switch tabs
-        function switchTab(tabId) {
+        function switchTab(tabId, updateHistory = true) {
+            // If landing page requested
+            if (tabId === 'landing') {
+                showLandingPage();
+                return;
+            }
+            
             // Update sidebar active state
             document.querySelectorAll('.sidebar__link').forEach(link => {
                 link.classList.toggle('active-link', link.dataset.tab === tabId);
@@ -359,30 +515,50 @@
 
             // Update content visibility
             document.querySelectorAll('.content-container').forEach(container => {
-                container.classList.toggle('active', container.id === `${tabId}-content`);
+                container.classList.toggle('active', container.id === `${tabId}-content` || 
+                    (tabId === 'landing' && container.id === 'landing-content'));
             });
 
             // Scroll to the top of the page
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
             closeSidebar();
-            loadMarkdownContent(tabId);
+            
+            // Load content if not landing page
+            if (tabId !== 'landing') {
+                loadMarkdownContent(tabId);
+            }
+            
+            // Update URL if requested
+            if (updateHistory) {
+                window.history.pushState({ page: tabId }, '', `#${tabId}`);
+            }
         }
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
             // Generate dynamic content
             generateSidebar();
+            generateLandingPage();
             generateContentContainers();
 
-            // Load initial content
-            loadMarkdownContent(tabs[0].id);
+            // Set up event listeners
+            document.getElementById('home-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                switchTab('landing');
+            });
 
-            // Set up tab click handlers
+            // Handle clicks on category links
             document.addEventListener('click', (e) => {
                 if (e.target.closest('.sidebar__link')) {
                     e.preventDefault();
                     const tabId = e.target.closest('.sidebar__link').dataset.tab;
+                    switchTab(tabId);
+                }
+                
+                if (e.target.closest('.concept-link')) {
+                    e.preventDefault();
+                    const tabId = e.target.closest('.concept-link').dataset.tab;
                     switchTab(tabId);
                 }
             });
@@ -409,6 +585,20 @@
                     closeSidebar();
                 }
             });
+
+            // Handle back/forward navigation
+            window.addEventListener('popstate', (e) => {
+                const tabId = window.location.hash.substring(1) || 'landing';
+                switchTab(tabId, false);
+            });
+
+            // Load initial content based on URL
+            const initialTab = window.location.hash.substring(1);
+            if (initialTab && tabs.some(tab => tab.id === initialTab)) {
+                switchTab(initialTab);
+            } else {
+                showLandingPage();
+            }
         });
     </script>
 </body>
