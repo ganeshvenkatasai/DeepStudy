@@ -1,4 +1,4 @@
-# AWS Interview Preparation Guide
+# AWS Interview
 
 ## Cloud Fundamentals
 ### What is Cloud Computing?
@@ -104,9 +104,3 @@
 - `Backup/Restore` → Lowest cost option  
 - `Pilot Light` → Minimal running services  
 - `Multi-site` → Active-active redundancy  
-
-## Interview Tips
-- `Know frameworks` → Well-Architected principles  
-- `Core services` → EC2/S3/VPC/IAM fundamentals  
-- `Real examples` → Prepare case studies  
-- `Simple explanations` → Avoid unnecessary jargon  
