@@ -84,7 +84,7 @@
 - Containerization (Docker, Kubernetes)
 - Serverless (AWS Lambda)
 
-## 📜 Core Principles
+## Core Principles
 - CAP Theorem (Consistency, Availability, Partition Tolerance)
 - PACELC Theorem
 - ACID Properties
@@ -93,7 +93,7 @@
 - Back-of-the-Envelope Estimation
 - Non-Functional Requirements (NFRs)
 
-## 🔄 Scalability Patterns
+## Scalability Patterns
 - Horizontal Scaling
 - Vertical Scaling
 - Stateless Architecture
@@ -103,7 +103,7 @@
 - Denormalization
 - Materialized Views
 
-## ⚖️ Load Management
+## Load Management
 - Load Balancers (ALB, NLB)
 - Round Robin
 - Least Connections
@@ -113,7 +113,7 @@
 - Bulkhead Pattern
 - Throttling
 
-## 💾 Database Systems
+## Database Systems
 ### SQL/RDBMS
 - Indexing (B-Tree, LSM Tree)
 - Transactions (ACID)
@@ -131,7 +131,7 @@
 - Time-Series (InfluxDB)
 - Search (Elasticsearch)
 
-## 🌐 Distributed Systems
+## Distributed Systems
 - Consensus (Paxos, Raft)
 - Leader Election
 - Quorum
@@ -142,7 +142,7 @@
 - MapReduce
 - CRDTs (Conflict-Free Replicated Data Types)
 
-## 📡 Networking
+## Networking
 - REST
 - GraphQL
 - gRPC
@@ -152,7 +152,7 @@
 - API Gateway
 - Service Mesh
 
-## 🛡️ Security
+## Security
 - OAuth 2.0
 - JWT
 - SAML
@@ -162,7 +162,7 @@
 - WAF (Web Application Firewall)
 - DDoS Protection
 
-## 🔍 Observability
+## Observability
 - Logging (ELK)
 - Metrics (Prometheus)
 - Tracing (Jaeger)
@@ -171,7 +171,7 @@
 - Health Checks
 - Alerting
 
-## 🚀 Deployment
+## Deployment
 - Blue-Green
 - Canary
 - Rolling Updates
@@ -181,7 +181,7 @@
 - Orchestration (Kubernetes)
 - Serverless
 
-## 🧩 Design Patterns
+## Design Patterns
 - CQRS
 - Event Sourcing
 - Saga Pattern
@@ -191,7 +191,7 @@
 - Retry Pattern
 - Backpressure
 
-## 📊 Storage Systems
+## Storage Systems
 - Block Storage
 - File Storage
 - Object Storage
@@ -200,7 +200,7 @@
 - Data Lakes
 - Data Warehouses
 
-## ✉️ Messaging
+## Messaging
 - Pub-Sub
 - Message Queues
 - Kafka Topics
@@ -209,7 +209,7 @@
 - Exactly-Once Semantics
 - Ordered Delivery
 
-## 🌟 Real-World Systems
+## Real-World Systems
 - URL Shortener
 - Chat System
 - Payment Gateway
@@ -219,7 +219,7 @@
 - Stock Exchange
 - Ride-Sharing
 
-## ⚙️ Optimization
+## Optimization
 - Caching (LRU, LFU)
 - CDN
 - Compression
@@ -229,7 +229,7 @@
 - Geohashing
 - Bloom Filters
 
-## 🛠️ Tools & Tech
+## Tools & Tech
 - Redis
 - Kafka
 - PostgreSQL
