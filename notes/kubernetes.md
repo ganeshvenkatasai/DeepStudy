@@ -1,3 +1,4 @@
+# Kubernetes
 ```
 kubectl version                        # Check installed Kubernetes version
 kubectl cluster-info                   # Display cluster information
@@ -43,9 +44,10 @@ kubectl top pods                        # Show CPU and memory usage of pods
 kubectl drain <node_name>               # Safely remove a node for maintenance
 kubectl cordon <node_name>              # Mark a node as unschedulable
 kubectl uncordon <node_name>            # Mark a node as schedulable again
+```
 
-
-### Kubernetes Deployment YAML ###
+## Deployment
+```
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -65,10 +67,10 @@ spec:
           image: my-app:latest
           ports:
             - containerPort: 80
+```
 
----
-
-### Kubernetes Service YAML ###
+## Service
+```
 apiVersion: v1
 kind: Service
 metadata:
@@ -81,10 +83,10 @@ spec:
       port: 80
       targetPort: 80
   type: LoadBalancer
+```
 
----
-
-### Kubernetes ConfigMap YAML ###
+## ConfigMap
+```
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -95,10 +97,10 @@ metadata:
 data:
   APP_ENV: "production"
   LOG_LEVEL: "debug"
+```
 
----
-
-### Kubernetes Secret YAML ###
+## Secret
+```
 apiVersion: v1
 kind: Secret
 metadata:
@@ -107,10 +109,10 @@ metadata:
 type: Opaque
 data:
   DB_PASSWORD: cGFzc3dvcmQ=  # Base64 encoded password
+```
 
----
-
-### Kubernetes Persistent Volume (PV) YAML ###
+## Persistent Volume
+```
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -122,10 +124,10 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/mnt/data"
+```
 
----
-
-### Kubernetes Persistent Volume Claim (PVC) YAML ###
+## Persistent Volume Claim
+```
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -136,10 +138,10 @@ spec:
   resources:
     requests:
       storage: 1Gi
+```
 
----
-
-### Kubernetes Ingress YAML ###
+## Ingress
+```
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -156,5 +158,4 @@ spec:
                 name: my-app-service
                 port:
                   number: 80
-
 ```
