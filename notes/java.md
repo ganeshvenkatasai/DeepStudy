@@ -1,5 +1,5 @@
 
-## Order of Elements in a Java Class :
+## Order of Elements in Java Class :
 ```
 Package Statement
 Import Statements
