@@ -1,4 +1,4 @@
-# Object Oriented Programming Concepts
+# Object Oriented Programming
 
 ## Core Principles
 - `Encapsulation` → Bundling data with methods that operate on that data  
