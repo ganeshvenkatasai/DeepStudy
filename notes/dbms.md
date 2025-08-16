@@ -1,4 +1,4 @@
-# DBMS Interview
+# DBMS
 
 ## Database Fundamentals
 ### Basic Concepts
