@@ -2,141 +2,111 @@
 
 ## Cloud Fundamentals
 ### What is Cloud Computing?
-- On-demand delivery of IT resources over the internet
-- Pay-as-you-go pricing instead of upfront costs
+- `On-demand IT resources` → Pay-as-you-go services over internet  
+- `No upfront costs` → Only pay for what you use  
 
 ### AWS Global Infrastructure
-- **Regions**: Physical locations with multiple data centers
-- **Availability Zones**: Isolated data centers within a region
-- **Edge Locations**: CDN endpoints for CloudFront
+- `Regions` → Geographical areas with multiple data centers  
+- `Availability Zones` → Isolated locations within regions  
+- `Edge Locations` → CloudFront CDN endpoints for faster delivery  
 
 ## AWS Architecture Principles
 ### Design Principles
-- Implement loose coupling between components
-- Design for failure (nothing fails 100% of the time)
-- Scale horizontally, not vertically
-- Implement elasticity (auto-scaling)
-- Think parallel for faster processing
+- `Loose coupling` → Minimize dependencies between components  
+- `Design for failure` → Assume components will fail  
+- `Horizontal scaling` → Add more instances rather than larger ones  
+- `Elasticity` → Automatically scale based on demand  
+- `Parallel processing` → Divide tasks for faster execution  
 
 ### Well-Architected Framework
-- Operational Excellence
-- Security
-- Reliability
-- Performance Efficiency
-- Cost Optimization
+- `Operational Excellence` → Run/monitor systems effectively  
+- `Security` → Protect data/systems  
+- `Reliability` → Recover from failures  
+- `Performance Efficiency` → Use resources efficiently  
+- `Cost Optimization` → Eliminate unnecessary spending  
 
 ## Core AWS Services
-
 ### EC2 (Elastic Compute Cloud)
-- Virtual servers in the cloud
-- Types: On-Demand, Spot, Reserved, Dedicated
-- AMI = Preconfigured server templates
-- Security Groups = Virtual firewalls
+- `Virtual servers` → Configurable compute capacity  
+- `Pricing models` → On-Demand, Spot, Reserved, Dedicated  
+- `AMI` → Preconfigured server templates  
+- `Security Groups` → Virtual firewalls for instances  
 
 ### S3 (Simple Storage Service)
-- Object storage for files
-- Storage Classes: Standard, IA, Glacier
-- Features: Versioning, Lifecycle Policies
-- 99.999999999% durability
+- `Object storage` → Store/retrieve any data  
+- `Storage classes` → Standard/IA/Glacier for different access needs  
+- `11x9s durability` → Extremely reliable storage  
 
 ### VPC (Virtual Private Cloud)
-- Your private network in AWS
-- Contains subnets (public/private)
-- Route tables control traffic
-- NACLs = Stateless firewall rules
+- `Private network` → Isolated cloud environment  
+- `Subnets` → Public/private network segments  
+- `NACLs` → Stateless firewall rules for subnets  
 
 ### IAM (Identity Access Management)
-- Controls who can do what
-- Users + Groups + Roles + Policies
-- Principle of least privilege
-- MFA for extra security
+- `Access control` → Manage who can do what  
+- `Least privilege` → Grant minimum required permissions  
+- `MFA` → Extra login security layer  
 
 ## Database Services
-
 ### RDS
-- Managed relational databases
-- Supports MySQL, PostgreSQL, etc.
-- Automated backups + patching
+- `Managed SQL` → Automated backups/patching  
+- `Multi-engine` → MySQL/PostgreSQL/Oracle etc.  
 
 ### DynamoDB
-- Fully managed NoSQL database
-- Single-digit millisecond latency
-- Auto-scaling capability
+- `Managed NoSQL` → Serverless key-value store  
+- `Single-digit ms` → Consistent low latency  
 
 ## Pricing Models
+### EC2 Pricing
+- `On-Demand` → Flexible pay-as-you-go  
+- `Reserved` → Discount for long-term commitment  
+- `Spot` → Bid for unused capacity  
 
-### EC2 Pricing Options
-- On-Demand: Pay by the hour
-- Reserved: 1-3 year commitment (cheaper)
-- Spot: Bid for unused capacity (cheapest)
-- Savings Plans: Commit to usage amount
+### S3 Pricing
+- `Pay for` → Storage/requests/data transfer  
 
-### S3 Pricing Factors
-- Storage amount
-- Number of requests
-- Data transfer out
-- Storage class used
-
-### Cost Optimization Tips
-- Right-size instances
-- Use auto-scaling
-- Delete unused resources
-- Monitor with Cost Explorer
-- Set billing alarms
+### Cost Optimization
+- `Right-size` → Match instance to workload  
+- `Auto-scale` → Adjust capacity automatically  
 
 ## Security Essentials
-
 ### Shared Responsibility Model
-- AWS secures the cloud (infrastructure)
-- You secure what's in the cloud (your data)
-
-### Key Security Services
-- IAM: Access control
-- KMS: Encryption keys
-- CloudTrail: Logs API calls
-- GuardDuty: Threat detection
-
-## Monitoring & Management
-
-### Core Services
-- CloudWatch: Monitoring
-- CloudTrail: Auditing
-- Config: Resource tracking
-- Systems Manager: Operational tools
-
-## Deployment Services
-
-### CI/CD Tools
-- CodeCommit: Git repositories
-- CodeBuild: Build service
-- CodeDeploy: Deployment automation
-- CodePipeline: Workflow orchestration
-
-## Serverless Options
+- `AWS secures` → Cloud infrastructure  
+- `You secure` → Your data/applications  
 
 ### Key Services
-- Lambda: Run code without servers
-- API Gateway: Create HTTP APIs
-- Step Functions: Workflow coordination
+- `KMS` → Encryption key management  
+- `CloudTrail` → Audit API activity  
+- `GuardDuty` → Threat detection  
+
+## Monitoring & Management
+- `CloudWatch` → Metrics/alarms  
+- `Config` → Resource inventory/changes  
+- `Systems Manager` → Operational management  
+
+## Deployment Services
+### CI/CD Tools
+- `CodePipeline` → End-to-end workflow  
+- `CodeBuild` → Build/test code  
+- `CodeDeploy` → Automated deployments  
+
+## Serverless Options
+- `Lambda` → Run code without servers  
+- `API Gateway` → Create/manage APIs  
+- `Step Functions` → Coordinate workflows  
 
 ## Migration Strategies
-
-### Common Approaches
-- Rehost (lift-and-shift)
-- Replatform (lift-tinker-and-shift)
-- Refactor (re-architect)
+- `Rehost` → Move as-is (lift-and-shift)  
+- `Replatform` → Minor optimizations  
+- `Refactor` → Redesign for cloud  
 
 ## Disaster Recovery
-
-### Recovery Options
-- Backup & Restore
-- Pilot Light
-- Warm Standby
-- Multi-site active-active
+- `Backup/Restore` → Lowest cost option  
+- `Pilot Light` → Minimal running services  
+- `Multi-site` → Active-active redundancy  
 
 ## Interview Tips
-- Know the AWS Well-Architected Framework
-- Understand the Shared Responsibility Model
-- Be familiar with core services (EC2, S3, VPC, IAM)
-- Practice explaining concepts simply
-- Have real-world examples ready
+- `Know frameworks` → Well-Architected principles  
+- `Core services` → EC2/S3/VPC/IAM fundamentals  
+- `Real examples` → Prepare case studies  
+- `Simple explanations` → Avoid unnecessary jargon  
