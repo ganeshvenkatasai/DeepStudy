@@ -1,3 +1,4 @@
+# Docker
 ```
 docker --version                        # Check installed Docker version
 docker info                             # Display system-wide Docker information
@@ -40,9 +41,10 @@ docker volume create <volume_name>       # Create a new volume
 docker volume rm <volume_name>           # Remove a volume
 docker volume inspect <volume_name>      # View volume details
 docker system prune                      # Remove unused containers, networks, and images
+```
 
-
-### Dockerfile Commands ###
+## Dockerfile Commands
+```
 FROM <base_image>                   # Set the base image (e.g., Ubuntu, Node.js, Golang)
 LABEL maintainer="Your Name"        # Add metadata to the image
 RUN <command>                       # Execute a command during the image build
@@ -57,8 +59,10 @@ VOLUME ["/data"]                     # Create a mountable directory
 ARG <var_name>                       # Define build-time variables
 HEALTHCHECK --interval=30s CMD curl -f http://localhost || exit 1  # Health check for container
 USER <username>                      # Set the user for running the container
+```
 
-### Example Dockerfile ###
+## Example Dockerfile
+```
 FROM node:16
 LABEL maintainer="Your Name"
 WORKDIR /app
@@ -67,8 +71,10 @@ RUN npm install
 COPY . .
 EXPOSE 3000
 CMD ["node", "server.js"]
+```
 
-### Docker Compose Commands ###
+## Docker Compose Commands
+```
 docker compose up                   # Start services defined in docker-compose.yml
 docker compose up -d                # Start services in detached mode
 docker compose down                 # Stop and remove services
@@ -86,8 +92,10 @@ docker compose pull                   # Pull latest images for services
 docker compose config                 # Validate the compose file syntax
 
 docker compose scale <service>=3      # Scale a service to multiple instances
+```
 
-### Example Docker Compose File (docker-compose.yml) ###
+## Example Docker Compose File (docker-compose.yml)
+```
 version: '3.8'
 services:
   web:
@@ -108,6 +116,5 @@ services:
       - pgdata:/var/lib/postgresql/data
 volumes:
   pgdata:
-  
 ```
 
