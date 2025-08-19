@@ -1,5 +1,5 @@
 
-# Linux Commands Cheat Sheet
+# Linux Commands
 
 ## File and Directory Management
 - `ls` - List directory contents
