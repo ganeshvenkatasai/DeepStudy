@@ -1,121 +1,204 @@
+# Java
+---
 
 ## Order of Elements in Java Class :
-```
-Package Statement
-Import Statements
-Class Declaration
+- Package Statement
+- Import Statements
+- Class Declaration
+- Constants (static final) # public static final int MAX_USERS = 1000;
+- Static variables (static) # private static int totalUsers;
+- Instance Variables (private first, then protected, then public)
+- Primitives (boolean, byte, short, int, long, float, double)
+- Immutable objects (`String`, `UUID`)
+- Collections (List, Set, Map)
+- Custom objects (Person, Address)
+- Constructors (Default, Parameterized, Static Factory, Copy Constructor, Builder Pattern)
+- Static Methods (Public, Private)
+- Instance Methods (Public, Protected, Private)
+- Override methods toString(), equals(), hashCode()
+- Private helper methods last
+- Inner Classes
 
-Constants (static final) # public static final int MAX_USERS = 1000;
-Static variables (static) # private static int totalUsers;
-Instance Variables (private first, then protected, then public)
-    Primitives (boolean, byte, short, int, long, float, double)
-    Immutable objects (`String`, `UUID`)
-    Collections (List, Set, Map)
-    Custom objects (Person, Address)
+---
 
-Constructors (Default, Parameterized, Static Factory, Copy Constructor, Builder Pattern)
-Static Methods (Public, Private)
-Instance Methods (Public, Protected, Private)
-Override methods toString(), equals(), hashCode()
-Private helper methods last
-
-Inner Classes
-```
-
-## Rules of Elements in a Java Class :
-```
-Extends must come before implements.
-Only one class can be extended, but multiple interfaces can be implemented.
-Final classes cannot be extended.
-Final methods cannot be overridden.
-Interface methods are implicitly public abstract.
-Interface variables are implicitly public static final.
-Enum constants should be UPPER_CASE.
-Enum methods are at bottom.
-public enum Color {
-    RED, GREEN, BLUE;
-
-    public void display() {
-        System.out.println("Color: " + this);
-    }
-}
-```
+## Java Collections :
 
 
-## Java Collections Framework :
-```
-1. List (Interface) - Implementations: ArrayList, LinkedList, Vector, Stack
-add(E e): Adds an element to the end of the list.
-add(int index, E element): Inserts an element at the specified index.
-get(int index): Retrieves an element at the specified index.
-remove(int index): Removes the element at the specified index.
-remove(Object o): Removes the first occurrence of the specified object.
-set(int index, E element): Replaces the element at the specified index.
-contains(Object o): Return true if found.
-indexOf(Object o): Returns the index of the first occurrence of the specified element.
-lastIndexOf(Object o): Returns the index of the last occurrence of the specified element. If not found returns -1
+### List : ArrayList, LinkedList, Vector, Stack
+`add(E e)` : Adds an element to the end of the list.
+`add(int index, E element)` : Inserts an element at the specified index.
+`get(int index)` : Retrieves an element at the specified index.
+`remove(int index)` : Removes the element at the specified index.
+`remove(Object o)` : Removes the first occurrence of the specified object.
+`set(int index, E element)` : Replaces the element at the specified index.
+`contains(Object o)` : Returns true if found.
+`indexOf(Object o)` : Returns the index of the first occurrence of the specified element.
+`lastIndexOf(Object o)` : Returns the index of the last occurrence of the specified element. If not found returns -1.
+`addAll(Collection<? extends E> c)` : Adds all elements from the collection to the list.
+`addAll(int index, Collection<? extends E> c)` : Inserts all elements at the specified index.
+`removeAll(Collection<?> c)` : Removes all elements that are contained in the specified collection.
+`retainAll(Collection<?> c)` : Retains only elements that are contained in the specified collection.
+`subList(int fromIndex, int toIndex)` : Returns a view of the portion of the list between the specified indexes.
+`toArray()` : Returns an array containing all elements in the list.
+`toArray(T[] a)` : Returns an array containing all elements in the list with the specified type.
+`iterator()` : Returns an iterator over the elements in the list.
+`listIterator()` : Returns a list iterator over the elements in the list.
+`listIterator(int index)` : Returns a list iterator starting at the specified position.
 
+---
 
-2. Set (Interface) - Implementations: HashSet, LinkedHashSet, TreeSet
-add(E e): Adds an element to the set.
-remove(Object o): Removes the specified element from the set.
-contains(Object o): Checks if the set contains the specified element.
-toArray(): Converts the set to an array.
+### Set : HashSet, LinkedHashSet, TreeSet
+`add(E e)` : Adds an element to the set.
+`remove(Object o)` : Removes the specified element from the set.
+`contains(Object o)` : Checks if the set contains the specified element.
+`toArray()` : Converts the set to an array.
+`addAll(Collection<? extends E> c)` : Adds all elements from the collection to the set.
+`removeAll(Collection<?> c)` : Removes all elements that are contained in the specified collection.
+`retainAll(Collection<?> c)` : Retains only elements that are contained in the specified collection.
+`containsAll(Collection<?> c)` : Returns true if the set contains all elements of the specified collection.
+`iterator()` : Returns an iterator over the elements in the set.
+`toArray(T[] a)` : Returns an array containing all elements in the set with the specified type.
 
-3. Queue (Interface) - Implementations: PriorityQueue, LinkedList, ArrayDeque
-offer(E e): Adds an element to the queue (returns false if full).
-poll(): Removes and returns the front element (returns null if empty).
-peek(): Retrieves the front element (returns null if empty).
+---
 
-4. Deque (Interface) - Implementations: ArrayDeque, LinkedList
-offerFirst(E e): Adds an element at the front of the deque (returns false if full).
-offerLast(E e): Adds an element at the end of the deque (returns false if full).
-pollFirst(): Removes and returns the front element (returns null if empty).
-pollLast(): Removes and returns the last element (returns null if empty).
-peekFirst(): Retrieves the front element (returns null if empty).
-peekLast(): Retrieves the last element (returns null if empty).
+### Queue : PriorityQueue, LinkedList, ArrayDeque
+`offer(E e)` : Adds an element to the queue (returns false if full).
+`poll()` : Removes and returns the front element (returns null if empty).
+`peek()` : Retrieves the front element (returns null if empty).
+`add(E e)` : Inserts the element into the queue (throws exception if full).
+`remove()` : Retrieves and removes the head of the queue (throws exception if empty).
+`element()` : Retrieves the head of the queue (throws exception if empty).
+`iterator()` : Returns an iterator over the elements in the queue.
+`toArray()` : Returns an array containing all elements in the queue.
 
-5. Map (Interface) - Implementations: HashMap, LinkedHashMap, TreeMap, Hashtable
-put(K key, V value): Adds or updates a key-value pair in the map.
-putIfAbsent(K key, V value): Adds key-value only if key is absent.
-get(Object key): Retrieves the value associated with the key.
-remove(Object key): Removes the key-value pair for the specified key.
-containsKey(Object key): Checks if the map contains the specified key.
-containsValue(Object value): Checks if the map contains the specified value.
-keySet(): Returns a set of all keys in the map.
-values(): Returns a collection of all values in the map.
-entrySet(): Returns a set of all key-value pairs in the map.
+---
 
-Common methods :
-size(): Returns the number of entries.
-clear(): Removes all entries.
-isEmpty(): Return true if no entries present.
+### Deque : ArrayDeque, LinkedList
+`offerFirst(E e)` : Adds an element at the front of the deque (returns false if full).
+`offerLast(E e)` : Adds an element at the end of the deque (returns false if full).
+`pollFirst()` : Removes and returns the front element (returns null if empty).
+`pollLast()` : Removes and returns the last element (returns null if empty).
+`peekFirst()` : Retrieves the front element (returns null if empty).
+`peekLast()` : Retrieves the last element (returns null if empty).
+`addFirst(E e)` : Inserts an element at the front (throws exception if full).
+`addLast(E e)` : Inserts an element at the end (throws exception if full).
+`removeFirst()` : Removes and returns the first element (throws exception if empty).
+`removeLast()` : Removes and returns the last element (throws exception if empty).
+`getFirst()` : Retrieves the first element (throws exception if empty).
+`getLast()` : Retrieves the last element (throws exception if empty).
+`removeFirstOccurrence(Object o)` : Removes the first occurrence of the specified element.
+`removeLastOccurrence(Object o)` : Removes the last occurrence of the specified element.
+`push(E e)` : Pushes an element onto the stack (front of deque).
+`pop()` : Pops an element from the stack (front of deque).
 
-```
+---
+
+### Map : HashMap, LinkedHashMap, TreeMap, Hashtable
+`put(K key, V value)` : Adds or updates a key-value pair in the map.
+`putIfAbsent(K key, V value)` : Adds key-value only if key is absent.
+`get(Object key)` : Retrieves the value associated with the key.
+`getOrDefault(Object key, V defaultValue)` : Returns the value for the key, or default value if key is not found.
+`remove(Object key)` : Removes the key-value pair for the specified key.
+`remove(Object key, Object value)` : Removes the entry only if key is mapped to the specified value.
+`replace(K key, V value)` : Replaces the entry for the specified key only if it's currently mapped.
+`replace(K key, V oldValue, V newValue)` : Replaces the entry only if currently mapped to the specified value.
+`containsKey(Object key)` : Checks if the map contains the specified key.
+`containsValue(Object value)` : Checks if the map contains the specified value.
+`keySet()` : Returns a set of all keys in the map.
+`values()` : Returns a collection of all values in the map.
+`entrySet()` : Returns a set of all key-value pairs in the map.
+`putAll(Map<? extends K, ? extends V> m)` : Copies all mappings from the specified map.
+`compute(K key, BiFunction<? super K, ? super V, ? extends V> remappingFunction)` : Computes a mapping for the specified key.
+`computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction)` : Computes value if key is absent.
+`computeIfPresent(K key, BiFunction<? super K, ? super V, ? extends V> remappingFunction)` : Computes value if key is present.
+`merge(K key, V value, BiFunction<? super V, ? super V, ? extends V> remappingFunction)` : Merges the specified value with existing value.
+`forEach(BiConsumer<? super K, ? super V> action)` : Performs the given action for each entry.
+`replaceAll(BiFunction<? super K, ? super V, ? extends V> function)` : Replaces each entry's value with the result of the function.
+
+---
+
+### Common Methods
+`size()` : Returns the number of entries.
+`clear()` : Removes all entries.
+`isEmpty()` : Returns true if no entries present.
+`equals(Object o)` : Compares the specified object with this collection for equality.
+`hashCode()` : Returns the hash code value for this collection.
+`containsAll(Collection<?> c)` : Returns true if this collection contains all elements in the specified collection.
+`stream()` : Returns a sequential stream with this collection as its source.
+`parallelStream()` : Returns a parallel stream with this collection as its source.
+`spliterator()` : Creates a Spliterator over the elements in this collection.
+`removeIf(Predicate<? super E> filter)` : Removes all elements that satisfy the given predicate.
+`forEach(Consumer<? super E> action)` : Performs the given action for each element.
+
+---
+
+### TreeSet / TreeMap / SortedSet / SortedMap
+`first()` : Returns the first (lowest) element.
+`last()` : Returns the last (highest) element.
+`headSet(E toElement)` : Returns elements strictly less than toElement.
+`tailSet(E fromElement)` : Returns elements greater than or equal to fromElement.
+`subSet(E fromElement, E toElement)` : Returns elements from fromElement (inclusive) to toElement (exclusive).
+`comparator()` : Returns the comparator used to order elements.
+`firstKey()` : Returns the first (lowest) key (Map only).
+`lastKey()` : Returns the last (highest) key (Map only).
+`headMap(K toKey)` : Returns keys strictly less than toKey (Map only).
+`tailMap(K fromKey)` : Returns keys greater than or equal to fromKey (Map only).
+`subMap(K fromKey, K toKey)` : Returns keys from fromKey (inclusive) to toKey (exclusive) (Map only).
+
+---
+
+### NavigableSet / NavigableMap / TreeSet / TreeMap
+`lower(E e)` : Returns the greatest element strictly less than the given element.
+`floor(E e)` : Returns the greatest element less than or equal to the given element.
+`ceiling(E e)` : Returns the smallest element greater than or equal to the given element.
+`higher(E e)` : Returns the smallest element strictly greater than the given element.
+`pollFirst()` : Retrieves and removes the first element.
+`pollLast()` : Retrieves and removes the last element.
+`descendingSet()` : Returns a reverse order view of the elements.
+`descendingIterator()` : Returns an iterator over elements in descending order.
+`lowerKey(K key)` : Returns the greatest key strictly less than the given key (Map only).
+`floorKey(K key)` : Returns the greatest key less than or equal to the given key (Map only).
+`ceilingKey(K key)` : Returns the smallest key greater than or equal to the given key (Map only).
+`higherKey(K key)` : Returns the smallest key strictly greater than the given key (Map only).
+`firstEntry()` : Returns the first key-value mapping (Map only).
+`lastEntry()` : Returns the last key-value mapping (Map only).
+`pollFirstEntry()` : Removes and returns the first key-value mapping (Map only).
+`pollLastEntry()` : Removes and returns the last key-value mapping (Map only).
+`descendingMap()` : Returns a reverse order view of the mappings (Map only).
+`navigableKeySet()` : Returns a navigable set view of the keys (Map only).
+`descendingKeySet()` : Returns a reverse order navigable set view of the keys (Map only).
+
+---
+
+## Key Points :
+
+- Extends must come before implements.
+- Only one class can be extended, but multiple interfaces can be implemented.
+- Final classes cannot be extended.
+- Final methods cannot be overridden.
+- Interface methods are implicitly public abstract.
+- Interface variables are implicitly public static final.
+- lambdas and inner classes can only capture variables that are effectively final.
+
+---
 
 ## Iterators :
-### List
-```
+
+```java
+// List
 for (int i = 0; i < fruits.size(); i++) System.out.println(fruits.get(i));
 for (String fruit : fruits) System.out.println(fruit);
-```
-###  Set
-```
+// Set
 for (String city : cities) System.out.println(city);
-```
-### Queue
-```
+// Queue
 while (!queue.isEmpty()) System.out.println(queue.poll());
 for (String item : queue) System.out.println(item);
-```
-### Map
-```
+// Map
 for (Map.Entry<Integer, String> entry : map.entrySet()) System.out.println(entry.getKey() + " : " + entry.getValue());
 ```
 
 ## Exceptions :
-
-```
+```java
 class CustomException extends Exception{
     public CustomException(String message) {
         super(message);
@@ -123,13 +206,11 @@ class CustomException extends Exception{
 }
 
 class Main {
-    
     public void getException() throws CustomException{
         throw new CustomException("Divide by zero");
     }
     
     public static void main(String[] args) {
-        
         Main m = new Main();
         
         try {
@@ -145,110 +226,105 @@ class Main {
         } finally {
             System.out.println("Finally will execute anyway");
         }
-        
     }
 }
 
 ```
 
+---
+
 ## String Methods :
-```
-length() - Returns the length of the string.
-charAt(int index) - Returns the character at the specified index.
-substring(int beginIndex) - Returns a substring from the specified start index.
-substring(int beginIndex, int endIndex) - Returns a substring from the start index to the end index.
-contains(CharSequence sequence) - Returns true if the string contains the specified sequence.
-equals(Object anObject) - Compares the string to the specified object for equality.
-equalsIgnoreCase(String anotherString) - Compares the string to the specified string, ignoring case.
-compareTo(String anotherString) - Compares the string to the specified string lexicographically.
-compareToIgnoreCase(String str) - Compares the string to the specified string, ignoring case, lexicographically.
-startsWith(String prefix) - Returns true if the string starts with the specified prefix.
-endsWith(String suffix) - Returns true if the string ends with the specified suffix.
-indexOf(int ch) - Returns the index of the first occurrence of the specified character.
-indexOf(String str) - Returns the index of the first occurrence of the specified substring.
-lastIndexOf(int ch) - Returns the index of the last occurrence of the specified character.
-lastIndexOf(String str) - Returns the index of the last occurrence of the specified substring.
-replace(char oldChar, char newChar) - Returns a new string with all occurrences of oldChar replaced by newChar.
-replace(CharSequence target, CharSequence replacement) - Replaces each substring of the string that matches the literal target with the specified replacement.
-replaceAll(String regex, String replacement) - Replaces each substring of the string that matches the regex with the specified replacement.
-replaceFirst(String regex, String replacement) - Replaces the first substring of the string that matches the regex with the specified replacement.
-toLowerCase() - Converts all characters in the string to lowercase.
-toUpperCase() - Converts all characters in the string to uppercase.
-trim() - Removes leading and trailing whitespace from the string.
-split(String regex) - Splits the string around matches of the given regular expression.
-split(String regex, int limit) - Splits the string around matches of the given regular expression, with a limit on the number of splits.
-concat(String str) - Concatenates the specified string to the end of the current string.
-join(CharSequence delimiter, CharSequence... elements) - Joins the given elements with the specified delimiter.
-valueOf(int i) - Returns the string representation of the specified integer.
-toCharArray() - Converts the string into a new character array.
-isEmpty() - Returns true if the string is empty (length is 0).
-matches(String regex) - Returns true if the string matches the specified regular expression.
-regionMatches(int toffset, String other, int ooffset, int len) - Tests if two string regions are equal.
-regionMatches(boolean ignoreCase, int toffset, String other, int ooffset, int len) - Tests if two string regions are equal, with an option to ignore case.
-contains(CharSequence sequence) - Checks if the string contains the specified sequence of characters.
-format(String format, Object... args) - Returns a formatted string using the specified format and arguments.
-getBytes() - Encodes the string into a sequence of bytes using the platform's default charset.
-getBytes(Charset charset) - Encodes the string into a sequence of bytes using the specified charset.
-toString() - Returns the string itself (overridden from Object).
-contentEquals(StringBuffer sb) - Compares the string to the specified StringBuffer for equality.
-StringBuilder (mutable strings): StringBuilder sb = new StringBuilder("Hello");
-String.format(): String formatted = String.format("Value: %d", 42);
-StringBuffer (synchronized mutable strings): StringBuffer sb = new StringBuffer("Hello");
-String Comparison: str1.equals(str2), str1.equalsIgnoreCase(str2)
-```
+`length()` : Returns the length of the string.  
+`charAt(int index)` : Returns the character at the specified index.  
+`substring(int beginIndex)` : Returns a substring from the specified start index.  
+`substring(int beginIndex, int endIndex)` : Returns a substring from the start index to the end index.  
+`contains(CharSequence sequence)` : Returns true if the string contains the specified sequence.  
+`equals(Object anObject)` : Compares the string to the specified object for equality.  
+`equalsIgnoreCase(String anotherString)` : Compares the string to the specified string, ignoring case.  
+`compareTo(String anotherString)` : Compares the string to the specified string lexicographically.  
+`compareToIgnoreCase(String str)` : Compares the string to the specified string, ignoring case, lexicographically.  
+`startsWith(String prefix)` : Returns true if the string starts with the specified prefix.  
+`endsWith(String suffix)` : Returns true if the string ends with the specified suffix.  
+`indexOf(int ch)` : Returns the index of the first occurrence of the specified character.  
+`indexOf(String str)` : Returns the index of the first occurrence of the specified substring.  
+`lastIndexOf(int ch)` : Returns the index of the last occurrence of the specified character.  
+`lastIndexOf(String str)` : Returns the index of the last occurrence of the specified substring.  
+`replace(char oldChar, char newChar)` : Returns a new string with all occurrences of oldChar replaced by newChar.  
+`replace(CharSequence target, CharSequence replacement)` : Replaces each substring matching target with the replacement.  
+`replaceAll(String regex, String replacement)` : Replaces each substring matching the regex.  
+`replaceFirst(String regex, String replacement)` : Replaces the first substring matching the regex.  
+`toLowerCase()` : Converts all characters to lowercase.  
+`toUpperCase()` : Converts all characters to uppercase.  
+`trim()` : Removes leading and trailing whitespace.  
+`split(String regex)` : Splits the string around matches of the regex.  
+`split(String regex, int limit)` : Splits with a limit on number of splits.  
+`concat(String str)` : Concatenates the specified string.  
+`join(CharSequence delimiter, CharSequence... elements)` : Joins elements with the delimiter.  
+`valueOf(int i)` : Returns the string representation of the integer.  
+`toCharArray()` : Converts the string into a character array.  
+`isEmpty()` : Returns true if the string is empty.  
+`matches(String regex)` : Returns true if the string matches the regex.  
+`regionMatches(int toffset, String other, int ooffset, int len)` : Compares regions of two strings.  
+`regionMatches(boolean ignoreCase, int toffset, String other, int ooffset, int len)` : Same as above, with case control.  
+`format(String format, Object... args)` : Returns a formatted string.  
+`getBytes()` : Encodes the string into bytes using default charset.  
+`getBytes(Charset charset)` : Encodes into bytes using specified charset.  
+`toString()` : Returns the string itself.  
+`contentEquals(StringBuffer sb)` : Compares the string to a StringBuffer.  
+`StringBuilder sb = new StringBuilder("Hello")` : Creates a mutable string.  
+`String.format("Value: %d", 42)` : Formats a string.  
+`StringBuffer sb = new StringBuffer("Hello")` : Creates a synchronized mutable string.  
+`str1.equals(str2), str1.equalsIgnoreCase(str2)` : String comparisons.  
+
+---
 
 ## StringBuilder Methods :
-```
-StringBuilder() → Creates empty StringBuilder (capacity=16).
-StringBuilder(int capacity) → Creates empty StringBuilder with given capacity.
-StringBuilder(String str) → Creates StringBuilder initialized with str.
-length() or capacity()
-append(x) → Appends x (any type) to the end.
-insert(int offset, x) → Inserts x at offset.
-delete(int start, int end) → Removes chars from start to end-1.
-deleteCharAt(int index) → Removes char at index.
-replace(int start, int end, String str) → Replaces substring with str.
-reverse() → Reverses the character sequence.
-setCharAt(int index, char ch) → Sets ch at index.
-substring(int start) → Returns substring from start to end.
-substring(int start, int end) → Returns substring from start to end-1.
-length() → Returns current length.
-capacity() → Returns current capacity.
-ensureCapacity(int min) → Ensures capacity ≥ min.
-trimToSize() → Reduces capacity to match length.
-toString() → Converts to String.
-chars() → Returns IntStream of characters.
-sb.setLength(0);  // Resets to "" (keeps capacity) // reuses buffer without reallocation
-sb = new StringBuilder();  // Fresh empty instance // if memory optimization is needed
-```
+`StringBuilder()` : Creates empty StringBuilder (capacity=16).  
+`StringBuilder(int capacity)` : Creates empty StringBuilder with given capacity.  
+`StringBuilder(String str)` : Creates StringBuilder initialized with str.  
+`append(x)` : Appends x (any type).  
+`insert(int offset, x)` : Inserts x at the given offset.  
+`delete(int start, int end)` : Removes chars from start to end-1.  
+`deleteCharAt(int index)` : Removes char at the given index.  
+`replace(int start, int end, String str)` : Replaces substring with str.  
+`reverse()` : Reverses the character sequence.  
+`setCharAt(int index, char ch)` : Sets a char at given index.  
+`substring(int start)` : Returns substring from start to end.  
+`substring(int start, int end)` : Returns substring from start to end-1.  
+`length()` : Returns current length.  
+`capacity()` : Returns current capacity.  
+`ensureCapacity(int min)` : Ensures minimum capacity.  
+`trimToSize()` : Reduces capacity to match length.  
+`toString()` : Converts to String.  
+`chars()` : Returns IntStream of characters.  
+`sb.setLength(0)` : Resets to "" but keeps capacity.  
+`sb = new StringBuilder()` : Creates fresh empty instance.  
 
-## Modifiers :
+---
 
 ### Access Modifiers (Control Visibility)
-```
-public → Accessible from anywhere in the program.
-protected → Accessible within the same package and subclasses.
-private → Accessible only within the same class.
-(default / package-private) → Accessible only within the same package (no keyword needed).
-```
+`public` : Accessible from anywhere.  
+`protected` : Accessible within same package + subclasses.  
+`private` : Accessible only within the class.  
+`(default / package-private)` : Accessible only within the same package.
 
+---
 ### Non Access Modifiers (Modify Behavior)
-```
-static → Belongs to the class rather than an instance.
-final → Used for constants, preventing inheritance (class), and preventing method overriding.
-abstract → Used in abstract classes and methods without a body.
-synchronized → Used in multithreading to allow only one thread at a time.
-volatile → Ensures visibility of shared variables in multithreading.
-transient → Prevents a field from being serialized.
-strictfp → Ensures floating-point calculations follow IEEE precision rules.
-native → Used to call platform-specific (C/C++) code.
-```
+`static` : Belongs to the class, not instance.  
+`final` : Used for constants, prevents inheritance or overriding.  
+`abstract` : Used for abstract classes/methods (no body).  
+`synchronized` : Ensures only one thread accesses at a time.  
+`volatile` : Ensures visibility of shared variables across threads.  
+`transient` : Excludes a variable from serialization.  
+`strictfp` : Enforces IEEE precise floating-point calculations.  
+`native` : Used to call platform-specific (C/C++) code.  
+
+---
 
 ## Multithreading :
 
 ### Extend Thread Class
-
-```
+```java
 class Main{
     public static void main(String[] args) {
         MyThread t = new MyThread();
@@ -264,8 +340,7 @@ public class MyThread extends Thread {
 ```
 
 ### Implements Runnable Interface
-
-```
+```java
 class Main{
     public static void main(String[] args) {
         Thread t = new Thread(new MyRunnable());
@@ -281,28 +356,24 @@ public class MyRunnable implements Runnable {
 ```
 
 ### Synchronized Method
-
-```
+```java
 public synchronized void increment() {
     count++;
 }
 ```
-
 ### Synchronized Block
-
-```
+```java
 private final Object lock = new Object();
 
 public void increment() {
-synchronized (lock) {
-    count++;
-}
+    synchronized (lock) {
+        count++;
+    }
 }
 ```
 
 ### Wait Notify 
-
-```
+```java
 class SharedBuffer {
     private Queue<Integer> queue = new LinkedList<>();
     private final int CAPACITY = 5;
@@ -326,11 +397,11 @@ class SharedBuffer {
 }
 ```
 
-
+---
 
 ## Custom Sorting :
 
-```
+```java
 Arrays.sort(arr);
 
 Arrays.sort(arr, (a, b) -> b - a); // Must be Integer[], not int[]
@@ -360,11 +431,12 @@ list.sort((a, b) -> {
 });
 ```
 
+---
 ## Enum :
 
-### Basic Enum Syntax 
+### Enum Syntax 
 
-```
+```java
 public enum Day {
     MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
 }
@@ -381,14 +453,14 @@ switch (today) {
 
 ### Enum with Custom Values
 
-```
+```java
 public enum Planet {
     MERCURY(3.303e+23, 2.4397e6),
     VENUS(4.869e+24, 6.0518e6),
     EARTH(5.976e+24, 6.37814e6);
 
-    private final double mass;   // in kilograms
-    private final double radius; // in meters
+    private final double mass;
+    private final double radius;
 
     // Constructor (private by default)
     Planet(double mass, double radius) {
@@ -408,13 +480,10 @@ System.out.println(earth.surfaceGravity()); // Output: 9.8 (approx)
 
 ### Enum with Abstract Methods
 
-```
+```java
 public enum Operation {
     ADD {
         public int apply(int a, int b) { return a + b; }
-    },
-    SUBTRACT {
-        public int apply(int a, int b) { return a - b; }
     },
     MULTIPLY {
         public int apply(int a, int b) { return a * b; }
@@ -424,12 +493,11 @@ public enum Operation {
 }
 
 System.out.println(Operation.ADD.apply(5, 3)); // Output: 8
-System.out.println(Operation.MULTIPLY.apply(5, 3)); // Output: 15
 ```
 
 ### Enum Implementing Interfaces
 
-```
+```java
 public enum Task implements Runnable {
     TASK1 {
         @Override
@@ -448,7 +516,7 @@ public enum Task implements Runnable {
 
 ### Looping Through Enum Values
 
-```
+```java
 for (Day day : Day.values()) {
     System.out.println(day);
 }
@@ -461,29 +529,27 @@ for (Day day : Day.values()) {
 | `name()`          | Returns the enum constant's name         | `"MONDAY".equals(Day.MONDAY.name())`     |
 | `ordinal()`       | Returns the position (index) of the enum | `Day.MONDAY.ordinal()` → `0`             |
 
+---
 
 ## Lambda :
 
-### What is a Lambda Expression?
+```Lambda Expression``` :
+- A lambda expression is a short block of code that takes parameters, executes a block of code, returns a result.
 
-```
-A lambda expression is a short block of code that: Takes parameters, Executes a block of code, Returns a result.
-(parameter1, parameter2) -> { code block }
+```Use lambdas when``` :
+- Working with functional interfaces (Runnable, Comparator, etc.)
+- Using Java Streams API
+- Writing event listeners (e.g., button clicks)
+- Implementing simple single-method interfaces
 
-Use lambdas when:
-Working with functional interfaces (Runnable, Comparator, etc.)
-Using Java Streams API
-Writing event listeners (e.g., button clicks)
-Implementing simple single-method interfaces
+```Avoid when``` :
+- The logic is too complex (use a proper method instead)
+- You need multiple methods (use a class)
 
-Avoid when:
-The logic is too complex (use a proper method instead)
-You need multiple methods (use a class)
-```
 
 ### Before Lambdas: The Old Way (Anonymous Classes)
 
-```
+```java
 // Old way - Anonymous class
 Runnable runnable = new Runnable() {
     @Override
@@ -500,7 +566,7 @@ runnable.run();
 
 ### Lambda with Parameters
 
-```
+```java
 // Functional Interface
 interface MathOperation {
     int operate(int a, int b);
@@ -508,7 +574,6 @@ interface MathOperation {
 
 public class Main {
     public static void main(String[] args) {
-        // Lambda implementation
         MathOperation add = (a, b) -> a + b;
         System.out.println(add.operate(5, 3)); // Output: 8
     }
@@ -533,123 +598,35 @@ public class Main {
 | Constructor        | `ArrayList::new`       | `() -> new ArrayList<>()`        |
 
 ```
-List<String> names = Arrays.asList("Alice", "Bob");
-
-// Lambda
-names.forEach(name -> System.out.println(name));
-
-// Method Reference (shorter)
-names.forEach(System.out::println);
+names.forEach(name -> System.out.println(name)); // Lambda
+names.forEach(System.out::println); // Method Reference
 ```
 
-### Real World Use Cases
-
-**Sorting a List**
-```
-List<String> names = Arrays.asList("Bob", "Alice", "Charlie");
-
-// Old way
-Collections.sort(names, new Comparator<String>() {
-    @Override
-    public int compare(String a, String b) {
-        return a.compareTo(b);
-    }
-});
-
-// With Lambda
-Collections.sort(names, (a, b) -> a.compareTo(b));
-
-// Even shorter
-names.sort((a, b) -> a.compareTo(b));
-```
-
-**Filtering with Streams**
-```
-List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
-
-// Get even numbers
-List<Integer> evens = numbers.stream()
-                            .filter(n -> n % 2 == 0)
-                            .collect(Collectors.toList());
-System.out.println(evens); // [2, 4]
-```
-
-**Thread Creation**
-```
-// Old way
-new Thread(new Runnable() {
-    @Override
-    public void run() {
-        System.out.println("Thread running");
-    }
-}).start();
-
-// With Lambda
-new Thread(() -> System.out.println("Thread running")).start();
-```
-
-### Common Mistakes to Avoid
-
-```
-Using non-final variables in lambdas
-int count = 0;
-Runnable r = () -> count++; // Error: count must be final or effectively final
-
-Overcomplicating lambdas
-// Bad
-Function<String, Integer> length = s -> { return s.length(); };
-
-// Good
-Function<String, Integer> length = s -> s.length();
-
-```
-
+---
 ## Stream
+- A Stream is a sequence of elements supporting Sequential or Parallel operations.
+- Lazy evaluation (operations execute only when needed) and only when termial operation called.
+- It is not possible to call two terminal operations on a single Java stream.
+- No storage (does not modify the original collection).
 
-### What is a Stream
+```Key Characteristics``` :
+- Not a data structure (unlike List, Set).
+- Supports functional style operations (filter, map, reduce).
+- Can be processed only once (like an iterator).
 
-```
-A Stream is a sequence of elements supporting:
-Sequential or parallel operations.
-Lazy evaluation (operations execute only when needed).
-No storage (does not modify the original collection).
-
-Key Characteristics
-✔ Not a data structure (unlike List, Set).
-✔ Supports functional-style operations (filter, map, reduce).
-✔ Can be processed only once (like an iterator).
-```
 
 ### Creating Streams
 
-**From a Collection**
-
-```
+```java
 List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+Stream<String> stream = names.stream(); // sequential stream
+Stream<String> parallelStream = names.parallelStream(); // parallel stream (uses multiple threads)
 
-// Create a sequential stream
-Stream<String> stream = names.stream();
-
-// Create a parallel stream
-Stream<String> parallelStream = names.parallelStream();
-```
-
-**From Arrays**
-
-```
 String[] languages = {"Java", "Python", "C++"};
 Stream<String> stream = Arrays.stream(languages);
-```
 
-**Using Stream.of()**
-
-```
 Stream<Integer> numbers = Stream.of(1, 2, 3, 4, 5);
-```
 
-**Infinite Streams**
-
-```
 // Generate random numbers infinitely
 Stream<Double> randomNumbers = Stream.generate(Math::random);
 
@@ -657,191 +634,71 @@ Stream<Double> randomNumbers = Stream.generate(Math::random);
 Stream<Integer> oddNumbers = Stream.iterate(1, n -> n + 2);
 ```
 
-## Intermediate vs Terminal Operations
+### Intermediate Operations
 
-```
-List<String> names = Arrays.asList("Alice", "Bob", "Anna", "Alex");
-
-List<String> result = names.stream()          // Create stream
-    .filter(name -> name.startsWith("A"))     // Intermediate (lazy)
-    .map(String::toUpperCase)                 // Intermediate (lazy)
-    .sorted()                                 // Intermediate (lazy)
-    .collect(Collectors.toList());            // Terminal (eager)
-
-System.out.println(result); // [ALEX, ALICE, ANNA]
-```
-
-### Common Stream Operations
-
-**filter(Predicate<T>) → Selects elements**
-
-```
-List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
-List<Integer> evens = numbers.stream()
-    .filter(n -> n % 2 == 0)
-    .collect(Collectors.toList()); // [2, 4]
-```
-
-**map(Function<T,R>) → Transforms elements**
-
-```
-List<String> names = Arrays.asList("Alice", "Bob");
-List<Integer> nameLengths = names.stream()
-    .map(String::length)
-    .collect(Collectors.toList()); // [5, 3]
-```
-
-**sorted() → Orders elements**
-
-```
-List<String> names = Arrays.asList("Bob", "Alice");
-List<String> sortedNames = names.stream()
-    .sorted()
-    .collect(Collectors.toList()); // ["Alice", "Bob"]
-```
-
-**distinct() → Removes duplicates**
-
-```
-List<Integer> numbers = Arrays.asList(1, 2, 2, 3, 3);
-List<Integer> unique = numbers.stream()
-    .distinct()
-    .collect(Collectors.toList()); // [1, 2, 3]
-```
-
-**limit(n) → Takes first n elements**
-
-```
-Stream.iterate(1, n -> n + 1)
-    .limit(5)
-    .forEach(System.out::println); // 1, 2, 3, 4, 5
-```
-
-**skip(n) → Skips first n elements**
-
-```
-List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
-List<Integer> skipped = numbers.stream()
-    .skip(2)
-    .collect(Collectors.toList()); // [3, 4, 5]
+```java
+filter(n -> n > 10)              // keeps elements that satisfy predicate
+map(String::toUpperCase)         // transforms each element
+mapToInt(String::length)         // specialized mapping to primitive streams
+flatMap(List::stream)            // flattens nested streams
+sorted()                         // natural order
+sorted(Comparator.reverseOrder())// custom comparator
+distinct()                       // removes duplicates
+limit(5)                         // keeps first 5 elements
+skip(3)                          // skips first 3 elements
+peek(System.out::println)        // for debugging (intermediate side-effect)
 ```
 
 ### Terminal Operations
 
-**forEach(Consumer<T>) → Iterates over elements**
+```java
+forEach(System.out::println)     // performs action on each element
+forEachOrdered(System.out::println) // preserves encounter order
 
-```
-List<String> names = Arrays.asList("Alice", "Bob");
-names.stream().forEach(System.out::println);
-```
+collect(Collectors.toList())     // collect to List
+collect(Collectors.toSet())      // collect to Set
+collect(Collectors.joining(", "))// join strings
 
-**collect(Collector) → Converts to a collection**
+count()                          // returns long count
+reduce((a, b) -> a + b)          // combines elements
+reduce(0, Integer::sum)          // with identity
 
-```
-List<String> names = Stream.of("Alice", "Bob")
-    .collect(Collectors.toList());
+anyMatch(s -> s.startsWith("A")) // returns true if any matches
+allMatch(n -> n > 0)             // returns true if all match
+noneMatch(s -> s.isEmpty())      // returns true if none match
 
-Set<Integer> numbers = Stream.of(1, 2, 2)
-    .collect(Collectors.toSet());
-```
-
-**count() → Counts elements**
-
-```
-long count = Stream.of(1, 2, 3).count(); // 3
-```
-
-**reduce() → Combines elements**
-
-```
-Optional<Integer> sum = Stream.of(1, 2, 3)
-    .reduce((a, b) -> a + b); // 6
-```
-
-**anyMatch() / allMatch() / noneMatch() → Boolean checks**
-
-```
-boolean hasA = Stream.of("Alice", "Bob")
-    .anyMatch(s -> s.contains("A")); // true
-
-boolean allEven = Stream.of(2, 4, 6)
-    .allMatch(n -> n % 2 == 0); // true
-```
-
-### Parallel Streams
-
-```
-Uses multiple threads for faster processing.
-Useful for large datasets.
-
-List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
-
-// Sequential
-long count = numbers.stream().count();
-
-// Parallel (faster for big data)
-long parallelCount = numbers.parallelStream().count();
-
-```
-
-### Real World Use Cases
-
-**Filtering & Transforming Data**
-
-```
-List<Product> products = getProducts();
-
-// Get names of products with price > 100
-List<String> expensiveProducts = products.stream()
-    .filter(p -> p.getPrice() > 100)
-    .map(Product::getName)
-    .collect(Collectors.toList());
-```
-
-**Finding Max/Min**
-
-```
-Optional<Integer> max = Stream.of(5, 3, 8, 2)
-    .max(Integer::compare); // 8
-```
-
-**Grouping Data**
-
-```
-Map<String, List<Employee>> employeesByDept = employees.stream()
-    .collect(Collectors.groupingBy(Employee::getDepartment));
+findFirst()                      // Optional of first element
+findAny()                        // Optional of any element (parallel-friendly)
+max(Comparator.naturalOrder())   // max element
+min(Comparator.naturalOrder())   // min element
+toArray()                        // collect into array
 ```
 
 ### Common Mistakes
 
-```
+```java 
 Stream<Integer> stream = Stream.of(1, 2, 3);
 stream.forEach(System.out::println);
 stream.forEach(System.out::println); // Error: stream already closed
-```
 
-```
 Optional<Integer> sum = Stream.of(1, 2).reduce((a, b) -> a + b);
 System.out.println(sum.get()); // OK if stream is not empty
 ```
 
+---
+
 ## Generics
 
-```
-T → Type (e.g., List<T>)
+`T` → **Type** (e.g., List<T>)
+`E` → **Element** (e.g., ArrayList<E>)
+`K` → **Key** (e.g., Map<K, V>)
+`V` → **Value** (e.g., Map<K, V>)
+`?` → **Wildcard** (unknown type)
 
-E → Element (e.g., ArrayList<E>)
-
-K → Key (e.g., Map<K, V>)
-
-V → Value (e.g., Map<K, V>)
-
-? → Wildcard (unknown type)
-```
 
 ### Generic Classes
 
-```
+```java
 class Box<T> {  // 'T' is a type placeholder
     private T item;
 
@@ -866,7 +723,7 @@ int num = intBox.getItem(); // Works with Integer too!
 
 ### Generic Methods
 
-```
+```java
 public <T> void printArray(T[] array) {  // <T> before return type
     for (T item : array) {
         System.out.print(item + " ");
@@ -882,7 +739,7 @@ printArray(numbers); // Also works with Integer[]
 
 ### Bounded Generics (Restricting Types)
 
-```
+```java
 class MathBox<T extends Number> {  // T must be Number or subclass (Integer, Double, etc.)
     private T number;
 
@@ -906,7 +763,7 @@ System.out.println(doubleBox.square()); // 12.25
 
 ### Wildcards (?) for Flexibility
 
-```
+```java
 public static void printNumbers(List<? extends Number> list) {
     for (Number num : list) {
         System.out.print(num + " ");
@@ -920,136 +777,17 @@ printNumbers(ints);    // Works
 printNumbers(doubles); // Also works
 ```
 
+---
+
 ## Java 8 features :
 
-### 1. Lambda Expressions
-
-```
-// Before Java 8 (Anonymous class)
-Runnable r = new Runnable() {
-    @Override
-    public void run() {
-        System.out.println("Hello");
-    }
-};
-
-// Java 8 (Lambda)
-Runnable r = () -> System.out.println("Hello");
-```
-
-### 2. Functional Interfaces
-
-```
-// Interfaces with a single abstract method (SAM). Java 8 introduced @FunctionalInterface annotation.
-
-@FunctionalInterface
-interface Greeting {
-    void sayHello(String name);
-}
-
-// Usage with Lambda
-Greeting greet = name -> System.out.println("Hello, " + name);
-greet.sayHello("Alice");
-```
-### 3. Stream API
-
-```
-List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
-
-// Filter names starting with 'A' and convert to uppercase
-List<String> result = names.stream()
-                          .filter(name -> name.startsWith("A"))
-                          .map(String::toUpperCase)
-                          .collect(Collectors.toList());
-// Output: ["ALICE"]
-```
-### 4. Default and Static Methods in Interfaces
-
-```
-interface Vehicle {
-    void start();
-
-    default void honk() {  // Default method
-        System.out.println("Beep beep!");
-    }
-    
-    // Static method (Java 8)
-    static boolean isElectric(int batteryLevel) {
-        return batteryLevel > 0;
-    }
-}
-
-class Car implements Vehicle {
-    @Override
-    public void start() {
-        System.out.println("Car started");
-    }
-    // `honk()` is optional to override
-}
-
-public class Main {
-    public static void main(String[] args) {
-        // Calling static method directly from the interface
-        boolean isElectric = Vehicle.isElectric(75);
-        System.out.println("Is electric? " + isElectric); // true
-    }
-}
-
-// Can have private static methods (Java 9+) for internal use.
-interface Vehicle {
-    static boolean isElectric(int battery) {
-        return isValidBattery(battery);
-    }
-
-    private static boolean isValidBattery(int battery) { // Java 9+
-        return battery >= 0;
-    }
-}
-```
-### 5. Method References
-
-```
-// Shortcut syntax for calling methods using ::
-
-List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
-
-// Equivalent to: name -> System.out.println(name)
-names.forEach(System.out::println);
-```
-### 6. Optional Class
-
-```
-// Reduces NullPointerException by wrapping nullable values.
-
-Optional<String> name = Optional.ofNullable(getName());
-String result = name.orElse("Default"); // Returns "Default" if null
-```
-### 7. New Date & Time API (java.time)
-
-```
-LocalDate today = LocalDate.now();
-LocalDate birthday = LocalDate.of(1990, Month.JANUARY, 1);
-
-Period age = Period.between(birthday, today);
-System.out.println(age.getYears()); // Age in years
-```
-### 8. Parallel Streams
-
-```
-// Enables multi-threaded processing of collections.
-
-List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
-
-// Process in parallel
-int sum = numbers.parallelStream()
-                .mapToInt(Integer::intValue)
-                .sum();
-```
-
-
-
-
-
+- Lambda Expressions
+- Functional Interfaces
+- Stream API
+- Default and Static Methods in Interfaces
+- Method References
+- Optional Class
+- Date and Time API
 
 
 
