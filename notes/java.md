@@ -1,5 +1,83 @@
 # Java
 
+---
+
+## History of Java
+- Developed by **James Gosling** at Sun Microsystems (1995)  
+- Initially called **Oak**, later renamed **Java**  
+- Key principle: **WORA → Write Once, Run Anywhere**  
+- Acquired by **Oracle** in 2010  
+
+---
+
+## JDK vs JRE vs JVM
+- **JVM (Java Virtual Machine):** Executes bytecode, provides platform independence  
+- **JRE (Java Runtime Environment):** JVM + libraries to run Java apps (no compilers)  
+- **JDK (Java Development Kit):** JRE + development tools (compiler, debugger, etc.)  
+- **Flow** : `.java` → (javac) → `.class` (bytecode) → JVM executes  
+
+---
+
+## Features of Java
+- Simple and Secure  
+- Object Oriented  
+- Platform Independent (via JVM)  
+- Robust (exception handling, GC)  
+- Multithreaded
+- High Performance (JIT compiler)  
+- Distributed (network support)  
+
+---
+
+## Data Types
+### Primitive Types
+- byte (1B), short (2B), int (4B), long (8B)  
+- float (4B), double (8B)  
+- char (2B, Unicode)  
+- boolean (1 bit, true/false)  
+
+### Wrapper Classes
+- byte → `Byte`  
+- short → `Short`  
+- int → `Integer`  
+- long → `Long`  
+- float → `Float`  
+- double → `Double`  
+- char → `Character`  
+- boolean → `Boolean`  
+
+---
+
+## Variables
+- **Local Variable:** Declared inside methods with block scope
+- **Instance Variable:** Inside class but outside methods per object  
+- **Static Variable:** Belongs to class shared across all objects  
+
+---
+
+## Operators
+- **Arithmetic:** `+ - * / % ++ --`  
+- **Relational:** `< > <= >= == !=`  
+- **Logical:** `&& || !`  
+- **Bitwise:** `& | ^ ~ << >> >>>`  
+- **Ternary:** `condition ? expr1 : expr2`  
+
+---
+
+## Control Flow
+- **if-else** (conditional branching)  
+- **switch-case** (multi-condition)  
+- **Loops:**  
+  - `for(init; condition; update)`  
+  - `while(condition)`  
+  - `do { } while(condition);`  
+
+---
+
+## 8. Type Casting
+- **Widening (Implicit):** smaller → larger  
+
+
 ## Order of Elements in Java Class :
 - Package Statement
 - Import Statements
@@ -596,7 +674,7 @@ public class Main {
 | Instance Method    | `System.out::println`  | `(s) -> System.out.println(s)`   |
 | Constructor        | `ArrayList::new`       | `() -> new ArrayList<>()`        |
 
-```
+```java
 names.forEach(name -> System.out.println(name)); // Lambda
 names.forEach(System.out::println); // Method Reference
 ```
@@ -778,15 +856,155 @@ printNumbers(doubles); // Also works
 
 ---
 
-## Java 8 features :
+## Java 8 (2014) :
 
-- Lambda Expressions
-- Functional Interfaces
-- Stream API
-- Default and Static Methods in Interfaces
-- Method References
-- Optional Class
-- Date and Time API
+- **Lambda Expressions** → Write functions inline (simplifies anonymous classes).
+- **Streams API** → Process collections in a functional style (map, filter, reduce).
+- **Functional Interfaces** → Interfaces with a single abstract method (used with lambdas).
+- **Default Methods** → Allow methods in interfaces with a default implementation.
+- **Static Methods in Interfaces** → Define utility methods directly inside interfaces.
+- **Method References** → Short-hand notation to call existing methods with `::`.
+- **Optional Class** → Handle null values gracefully without NullPointerException.
+- **New Date and Time API (java.time)** → Modern, immutable date/time handling.
+- **Nashorn JavaScript Engine** → Execute JavaScript code within Java applications.
+- **CompletableFuture** → Asynchronous programming support with futures.
+- **Parallel Streams** → Run stream operations in parallel for performance.
+- **Collectors Utility** → Collect results of stream processing (toList, toSet, groupingBy).
+- **Base64 Encoding/Decoding** → Built-in support for encoding/decoding Base64 data.
+- **Annotations on Java Types** → Apply annotations on types (e.g., generics, parameters).
+- **Repeating Annotations** → Use the same annotation multiple times on a declaration.
+
+---
+
+## Java 11 (2018) :
+
+- **Local-Variable Syntax for Lambda Parameters (`var`)** → Improves readability by using `var` in lambda expressions.  
+- **New String Methods** → `isBlank()`, `lines()`, `strip()`, `repeat()` – commonly asked in interviews.  
+- **Files API Enhancements** → `readString()` and `writeString()` simplify file handling.  
+- **HTTP Client (Standardized)** → Built-in `HttpClient` for HTTP/2 and async requests (often asked).  
+- **Flight Recorder** → Low-overhead monitoring/profiling tool inside the JVM.  
+- **Z Garbage Collector (ZGC)** → Experimental low-latency GC (frequently discussed in interviews).  
+- **Epsilon GC (No-Op GC)** → Allocates memory but does not reclaim (useful in testing scenarios).  
+- **Nest-Based Access Control** → Inner classes can access each other’s private members without reflection.  
+- **Removed Modules (Java EE & CORBA)** → Interviewers ask about removals/deprecations in Java 11.  
+
+---
+
+## Java 17 (2021) :
+
+- **Sealed Classes** → Restrict which classes can extend or implement a class/interface.  
+- **Pattern Matching for switch (Preview)** → Simplifies `switch` with type patterns and better readability.  
+- **Text Blocks (Standard)** → Multi-line string literals using `"""`, easier JSON/SQL/XML handling.  
+- **Records (Standard)** → Concise data-carrier classes with automatic getters, equals, hashCode, toString.  
+- **New macOS Rendering Pipeline** → Uses Apple Metal API for better graphics performance.  
+- **Foreign Function & Memory API (Incubator)** → Call native code & manage off-heap memory safely.  
+- **Deprecations/Removals** → Removed RMI Activation, Applet API deprecated.  
+- **Security Updates** → Strong encapsulation of JDK internals (access only via modules).  
+- **Strongly Encapsulated JDK Internals** → Prevents direct access to internal APIs (like `sun.misc.Unsafe`).  
+
+---
+
+## Java 21 (2023) :
+
+- **Virtual Threads (Project Loom)** → Lightweight threads managed by JVM, simplify concurrency and reduce resource usage.  
+- **Pattern Matching for switch (Standard)** → Type-safe, concise `switch` with patterns and guards.  
+- **Record Patterns (Standard)** → Deconstruct record values directly in pattern matching.  
+- **Sequenced Collections** → New interfaces (`SequencedCollection`, `SequencedSet`, `SequencedMap`) to handle ordered collections easily.  
+- **String Templates (Preview)** → Safer and more readable string interpolation (similar to templating in other languages).  
+- **Scoped Values (Preview)** → Safer alternative to ThreadLocal for sharing data across threads.  
+- **Foreign Function & Memory API (Standard)** → Replace JNI, interact with native libraries and memory safely.  
+- **Key Security Enhancements** → TLS, cryptography updates for stronger security.  
+- **Deprecations/Removals** → Final removal of `SecurityManager` and legacy APIs.  
+
+---
+
+## Imports 
+
+- **DSA → `java.util.*`**  
+  Collections framework (List, Set, Map, Queue, Stack, HashMap, ArrayList, etc.)
+
+- **Functional Programming → `java.util.stream.*`  `java.util.function.*`**  
+  Streams for functional style processing, functional interfaces (Predicate, Function, Consumer, Supplier).
+
+- **I/O → `java.io.*`, `java.nio.*`**  
+  File handling, input/output streams, readers/writers, and NIO for faster/buffered I/O.
+
+- **Database → `java.sql.*`**  
+  JDBC API for database connection, queries, ResultSet, PreparedStatement.
+
+- **Date/Time → `java.time.*`**  
+  Modern Date and Time API (LocalDate, LocalTime, LocalDateTime, ZonedDateTime, Duration, Period).
+
+- **Concurrency → `java.util.concurrent.*`**  
+  Multithreading utilities (ExecutorService, Future, CountDownLatch, ConcurrentHashMap, ThreadPoolExecutor).
+
+- **Regex → `java.util.regex.*`**  
+  Pattern matching using `Pattern` and `Matcher`.
+
+---
+
+## Regex 
+
+- **`.`**  Matches any single character : `"a.c"` → matches `abc`, `axc`, `a9c`
+
+- **`^`** Matches start of string : `"^abc"` → matches `abc123` (but not `1abc`)
+
+- **`$`** Matches end of string : `"xyz$"` → matches `123xyz` (but not `xyz123`)
+
+- **`*`** 0 or more occurrences : `"ab*"` → matches `a`, `ab`, `abb`, `abbbbb`
+
+- **`+`** 1 or more occurrences : `"ab+"` → matches `ab`, `abb`, `abbbbb` (but not `a`)
+
+- **`?`** 0 or 1 occurrence (optional) : `"colou?r"` → matches `color`, `colour`
+
+- **`{n}`** Exactly `n` times : `"a{3}"` → matches `aaa`
+
+- **`{n,}`** At least `n` times : `"a{2,}"` → matches `aa`, `aaa`, `aaaa...`
+
+- **`{n,m}`** Between `n` and `m` times : `"a{2,4}"` → matches `aa`, `aaa`, `aaaa`
+
+- **`[]`** Character set : `"[abc]"` → matches `a`, `b`, or `c`
+
+- **`[^ ]`** Negated set : `"[^abc]"` → matches any char except `a`, `b`, `c`
+
+- **`|`** OR : `"cat|dog"` → matches `cat` or `dog`
+
+- **`(...)`** Group : `"(ab)+"` → matches `ab`, `abab`, `ababab`
+
+- **`\d`** Digit `[0-9]` : `"\d+"` → matches `123`, `007`
+
+- **`\D`** Non-digit : `"\D+"` → matches `abc`, `!@#`
+
+- **`\w`** Word char `[a-zA-Z0-9_]` : `"\w+"` → matches `hello123`
+
+- **`\W`** Non-word char : `"\W+"` → matches `!@#`, `--`
+
+- **`\s`** Whitespace (space, tab, newline) : `"\s+"` → matches `"   "` (spaces), `\n`
+
+- **`\S`** Non whitespace : `"\S+"` → matches `hello`, `123`
+
+- **`(?i)`** Case insensitive flag : `"(?i)abc"` → matches `abc`, `ABC`, `AbC`
+
+## Date and Time API
+
+``` java
+LocalDate.now(); // 2025-08-27 → Current system date
+LocalTime.now(); // 21:15:30.123 → Current system time
+LocalDateTime.now(); // 2025-08-27T21:15:30.123 → Current date and time
+LocalDate.of(2023, 5, 10); // 2023-05-10 → Creates a specific date
+LocalTime.of(10, 30); // 10:30 → Creates a specific time
+LocalDate.parse("2023-08-15"); // 2023-08-15 → Parses string to date
+LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")); // 27/08/2025 → Formats date
+LocalDate.now().plusDays(5); // 2025-09-01 → Adds 5 days
+LocalDate.now().minusMonths(2); // 2025-06-27 → Subtracts 2 months
+LocalDate.of(2023,1,1).isBefore(LocalDate.of(2024,1,1)); // true → Checks if before
+LocalDate.now().getDayOfWeek(); // WEDNESDAY → Day of the week
+LocalDate.now().getMonth(); // AUGUST → Current month
+Instant.now(); // 2025-08-27T15:45:30Z → Machine timestamp (UTC)
+ZonedDateTime.now(ZoneId.of("Asia/Kolkata")); // 2025-08-27T21:15+05:30 → DateTime with zone
+```
+
+
 
 
 
