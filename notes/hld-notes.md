@@ -1,139 +1,176 @@
-# HLD Notes
+# HLD
 
-## Core Concepts
 
-### Scalability
-- **Vertical**: Increase server capacity (CPU/RAM) for single machine.  
-  *Application*: Monolithic apps needing quick performance boost
-- **Horizontal**: Add more servers to distribute load.  
-  *Application*: Web applications expecting user growth
+### 1. Clarify Requirements
+- Functional Requirements
+- Non Functional Requirements
 
-### Availability Metrics
-- **SLA**: Contractual uptime guarantee (e.g., 99.9%).  
-  *Application*: Cloud service provider commitments
-- **SLO**: Internal performance targets.  
-  *Application*: Team benchmarks for API response times
-- **SLI**: Measured metrics like error rates.  
-  *Application*: Monitoring dashboards
+### 2. Understand System Flow and Actors
+- Explain flow for clarity
+- List actors
 
-### CAP Theorem
-- Choose 2: Consistency, Availability, Partition Tolerance.  
-  *Application*: NoSQL databases prioritize availability over strong consistency
+### 3. Define User Actions and APIs
+- Write down actions done by actors
+- Make them as APIs
 
-## Databases
+### 4. Identify Microservices
+- Based on APIs identify Services
 
-### ACID vs BASE
-- **ACID**: Guarantees reliable transactions (banks).  
-  *Application*: Financial systems requiring precision
-- **BASE**: Favors availability over consistency.  
-  *Application*: Social media feeds where eventual consistency suffices
+### 5. Capacity and Scale Estimation
 
-### Database Sharding
-- **Hash-based**: Even distribution via hash function.  
-  *Application*: User data partitioning by userID hash
-- **Range-based**: Partition by value ranges (dates).  
-  *Application*: Time-series data like sensor readings
+- `Users and Traffic` : DAU/MAU, Peak QPS, Traffic patterns
+- `Data Size Estimations` : Request average payload size (in KB/MB), Database storage, Logs & metadata (add 10–20% overhead), Growth rate (per day/month/year)
+- `Read/Write Ratio` : Helps decide DB sharding, caching, and indexing
+- `Latency` : Time taken for a request (e.g., <200ms)
+- `Throughput` : Number of requests served per second
+- `Bandwidth` : Request payload size × QPS
+- `Cache Estimation` : Hit ratio, Cache size = Working set of hot data
+- `Database Scaling` : Vertical, Horizontal, Partition key selection
+- `Storage and Replication` : Replication factor, Effective storage = Raw storage × Replication factor, Cold vs hot storage
 
-## System Architecture
+### 6. Cost Estimation
 
-### Microservices
-- Independent services with own data stores.  
-  *Application*: E-commerce platforms separating payment, inventory, shipping
+#### 1. Compute (Servers/VMs/Containers)
+- Number of instances: X  
+- Cost per instance: $Y/month  
+- **Total: $X × Y = $Z/month**
 
-### Event-Driven Architecture
-- Components react to events/messages.  
-  *Application*: Real-time notifications in chat applications
 
-## Performance
+#### 2. Storage
+- Database storage: X TB × $Y/TB  
+- Blob storage (images/videos): X TB × $Y/TB  
+- Replication factor: R  
+- **Total: (DB + Blob) × R**
 
-### Caching Strategies
-- **CDN**: Geographic content distribution.  
-  *Application*: Static assets for global websites
-- **Redis**: In-memory key-value store.  
-  *Application*: Session storage for web apps
 
-### Rate Limiting
-- **Token Bucket**: Fixed capacity refilled over time.  
-  *Application*: API request throttling
-- **Leaky Bucket**: Fixed output rate.  
-  *Application*: Smoothing traffic bursts
+#### 3. Network / Bandwidth
+- Ingress traffic: Usually free  
+- Egress traffic: X TB × $Y/TB  
+- **Total: $Z/month**
 
-## Distributed Systems
+#### 4. Cache / CDN
+- Redis/Memcached cluster: $X/month  
+- CDN traffic: X GB × $Y/GB  
+- **Total: $Z/month**
 
-### Consistent Hashing
-- Minimizes redistribution when scaling.  
-  *Application*: Distributed caching systems like Memcached
+#### 5. Queue / Streaming
+- Kafka / PubSub cluster: $X/month  
+- **Total: $Z/month**
 
-### Leader Election
-- Chooses coordinator node in cluster.  
-  *Application*: Database clusters ensuring write consistency
+#### 6. Monitoring & Logging
+- Monitoring tools: $X per host × Y hosts  
+- **Total: $Z/month**
 
-## Security
+#### 7. Backups & Disaster Recovery
+- Backup storage: X TB × $Y/TB (e.g., Glacier)  
+- **Total: $Z/month**
 
-### OAuth 2.0
-- Delegated authorization framework.  
-  *Application*: "Login with Google" functionality
+#### 8. Third-Party Integrations
+- SMS (Twilio): X messages × $Y/message  
+- Emails (SendGrid): X emails × $Y/1000 emails  
+- **Total: $Z/month**
 
-### JWT
-- Stateless token-based authentication.  
-  *Application*: Single sign-on (SSO) systems
 
-## Deployment
+### 7. Design Data Model and Database
 
-### Blue-Green Deployment
-- Two identical environments switch traffic.  
-  *Application*: Zero-downtime production updates
+#### 1. Entities (Tables/Collections)
+- **Entity 1**: Attributes (with type, size, constraints)  
+- **Entity 2**: Attributes  
+- **Entity 3**: Attributes  
+- ...
 
-### Canary Releases
-- Gradual rollout to user subsets.  
-  *Application*: Testing new features with 5% of users
 
-## Storage
+## 2. Relationships
+- **One-to-One**: e.g., User ↔ Profile  
+- **One-to-Many**: e.g., User → Orders  
+- **Many-to-Many**: e.g., Students ↔ Courses  
 
-### Object Storage (S3)
-- Unlimited scalable file storage.  
-  *Application*: User-generated content like profile pictures
+---
 
-### Time-Series Databases
-- Optimized for timestamped data.  
-  *Application*: IoT sensor data collection
+## 3. Database Choice
+- **SQL (Relational)** → If strong consistency, transactions, joins needed.  
+- **NoSQL (Document/Key-Value/Column/Graph)** → If high scale, flexible schema, eventual consistency.  
+- Hybrid approach if required.
 
-## Real-World Patterns
+---
 
-### Circuit Breaker
-- Fails fast when downstream fails.  
-  *Application*: Preventing cascading failures in microservices
+## 4. Schema Design Example (Relational)
+**Users**  
+- user_id (PK)  
+- name  
+- email (unique)  
+- created_at  
 
-### Saga Pattern
-- Manages distributed transactions.  
-  *Application*: E-commerce checkout across services
+**Orders**  
+- order_id (PK)  
+- user_id (FK → Users.user_id)  
+- amount  
+- status  
+- created_at  
 
-## Observability
+**Payments**  
+- payment_id (PK)  
+- order_id (FK → Orders.order_id)  
+- amount  
+- mode  
+- status  
 
-### Distributed Tracing
-- Follows requests across services.  
-  *Application*: Debugging latency in microservices
+---
 
-### SLO Monitoring
-- Tracks service level objectives.  
-  *Application*: Ensuring 95% of requests <200ms
+## 5. Access Patterns (Queries)
+- Read-heavy or write-heavy?  
+- Frequent queries (e.g., "Get all orders by user").  
+- Indexing strategy.  
+- Query optimization (denormalization, caching if needed).  
 
-## Messaging
+---
 
-### Pub-Sub Model
-- Publishers → Topics → Subscribers.  
-  *Application*: Stock market data distribution
+## 6. Scaling Strategy
+- **Vertical scaling** → bigger DB machine.  
+- **Horizontal scaling** → sharding, partitioning.  
+- Replication (read replicas, master-slave).  
+- CAP theorem consideration: Strong Consistency vs Availability.  
 
-### Dead Letter Queues
-- Stores failed messages.  
-  *Application*: Retry mechanisms for payment processing
+---
 
-## Optimization
+## 7. Storage Estimation
+- Avg row size × number of rows = total DB size.  
+- Growth rate (daily/monthly/yearly).  
+- Index size overhead (~20–30%).  
 
-### Bloom Filters
-- Space-efficient probabilistic lookup.  
-  *Application*: Check username availability
+---
 
-### Geohashing
-- Encodes geographic coordinates.  
-  *Application*: Location-based restaurant searches
+## 8. Backup & Recovery
+- Point-in-time recovery.  
+- Replication across regions.  
+- Cold storage for historical data.  
+
+
+
+### 8. High Level Architecture Diagram
+
+### 9. Address Scalability and Reliability
+ - Cover all non functional requirements
+
+**Kafka** 
+Retention period
+
+### 10. Identify Tradeoffs 
+
+### 11. Handling Failures and Bottlenecks
+
+### 12. Security and Compliance
+
+### 13. Take Feedback and Iterate
+
+### 14. Summarize the Design
+
+
+
+
+
+---
+
+## My Learnings
+
+- `Snowflake ID` : Unique identifiers across a distributed system.
