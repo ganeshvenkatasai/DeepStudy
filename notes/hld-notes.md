@@ -1,7 +1,5 @@
 # HLD
 
----
-
 ### 1. Clarify Requirements
 - Functional Requirements
 - Non Functional Requirements
