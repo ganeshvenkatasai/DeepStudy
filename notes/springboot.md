@@ -1,5 +1,92 @@
 # Spring Boot
 
+If you have ever created a Spring Boot application, you have seen the following code in the main method:
+
+```java
+@SpringBootApplication
+public class MyApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MyApplication.class, args);
+    }
+}
+```
+
+At first glance, it looks like a simple static method call, but behind the scenes, `SpringApplication.run()` does a lot of heavy lifting.
+
+
+---
+
+![Logs](https://raw.githubusercontent.com/ganeshvenkatasai/DeepStudy/refs/heads/main/assets/img/logs.png)
+
+---
+
+
+### Key Observations from Application Logs
+
+Some important points we can deduce from logs:
+- Spring Boot Application Process ID is 90279
+- Spring Boot Application is launching Tomcat on port 8080
+
+## Lifecycle of SpringApplication.run()
+
+Let's understand what happens behind the scenes:
+
+### 1. Creating the SpringApplication Instance
+
+```java
+SpringApplication app = new SpringApplication(MyApplication.class);
+SpringApplication.run(MyApplication.class, args);
+```
+
+- Identifies if it's a Servlet-based, Reactive or Non-web application
+- Chooses the right ApplicationContext type:
+  - `AnnotationConfigServletWebServerApplicationContext` → MVC apps
+
+### 2. Preparing the Environment
+
+Loads configuration from multiple sources:
+- `application.properties` or `application.yaml`
+- Command-line arguments
+- Environment variables
+- Determine active profile (Dev, test, prod)
+- Makes all values available through the Environment abstraction
+
+### 3. Creating the ApplicationContext
+
+- Initializing the Spring container
+- Register beans annotated with `@Component`, `@Service`, `@Repository`, `@Configuration`
+- Prepares auto-configuration (`@EnableAutoConfiguration`)
+
+### 4. Refreshing the Context
+
+- Calls `context.refresh()`
+- Triggers bean instantiation and dependency injection
+- Applies lifecycle callbacks (`@PostConstruct`, InitializingBeans)
+
+### 5. Starting the Embedded Server (for web apps)
+
+- Starts Tomcat, Jetty, or Undertow
+- Deploys your controllers so the app can start handling requests
+
+### 6. Load Application Properties
+
+Spring Boot allows you to set configuration properties (like database connection or port number) in files like `application.properties` or `application.yml`.
+
+The run method loads these configurations and applies them, so your app behaves according to the settings you have defined.
+
+### 7. Run Initializers and Listeners
+
+**Initializers**: Pieces of code that run before the application starts, and they allow you to perform setup tasks.
+
+**Listeners**: Objects that listen for specific events during the application lifecycle and respond to them, such as when the app starts or shuts down.
+
+### 8. Manage Command-Line Arguments
+
+
+### 9. Launch the Application
+
+---
+
 ## Core Concepts
 - `SpringApplication` → Main entry point for Spring Boot apps  
 - `Auto-configuration` → Automatically configures Spring based on dependencies  
